@@ -8,7 +8,7 @@ interface TextFieldProps {
   type: string;
   variant: any;
   sx: Object;
-  value?: number | string;
+  value: number | string;
   touched: any;
   onChange: (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -40,6 +40,7 @@ const TextFieldInput: React.FC<TextFieldProps> = ({
         type={type}
         value={value}
         onChange={onChange}
+        onBlur={onBlur}
         variant={variant}
         sx={sx}
       />
