@@ -1,0 +1,36 @@
+body {
+  margin: 0;
+  font-family: Montserrat app, apple-system;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+html,body {
+  background-color:#FFFFFF;
+  width:100%;
+  height:100%;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+h1, p {
+  color: white;
+  margin-top: 0;
+  text-align: center;
+}
+h1{
+  font-weight: 700;
+}
+p {  
+  font-weight: 200;
+}
+a {
+  text-decoration: none;
+  color: none;
+}
+button {
+  cursor: pointer;
+  border: 0;
+}
+

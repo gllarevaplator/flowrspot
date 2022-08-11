@@ -1,0 +1,36 @@
+.discover__container {
+    background: url(./pl-hero.png) no-repeat center center fixed; 
+   -webkit-background-size: cover;
+   -moz-background-size: cover;
+   -o-background-size: cover;
+   background-size: cover;
+   height: 35rem;
+  }  
+.discover__description {
+      padding: 50px;
+      margin: 0 auto;
+      position: relative;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
+}
+.search__box {
+    padding: 23px;
+    padding-right: 70px;
+}
+.search__container {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+}
+.search__icon {
+    position: absolute;
+    bottom: 27px;
+    right: 30px;
+    cursor: pointer;
+}
+
+
+

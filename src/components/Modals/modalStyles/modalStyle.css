@@ -1,0 +1,12 @@
+.submit__button {
+    width: 100%;
+}
+.modal__header {
+    display: flex;
+}
+#modal-modal-title {
+    flex-grow: 1;
+}
+.swal-footer {
+    text-align: center;
+}
