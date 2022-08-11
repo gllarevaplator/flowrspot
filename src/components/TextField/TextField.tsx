@@ -1,21 +1,6 @@
 import React from "react";
 import TextField from "@mui/material/TextField";
-
-interface TextFieldProps {
-  id: string;
-  name: string;
-  label: string;
-  type: string;
-  variant: any;
-  sx: Object;
-  value: number | string;
-  touched: any;
-  onChange: (
-    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => void;
-  onBlur: (e: any) => void;
-  errors: any;
-}
+import TextFieldProps from "../../models/textField";
 
 const TextFieldInput: React.FC<TextFieldProps> = ({
   id,

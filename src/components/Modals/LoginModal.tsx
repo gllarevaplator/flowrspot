@@ -65,11 +65,7 @@ const LoginModal: React.FC<ModalProps> = ({
                 className: "primary__button text-center",
               },
             },
-          }).then((result) =>
-            result === "profile"
-              ? swal("Pikachu fainted! You gained 500 XP!")
-              : null
-          );
+          }).then((result) => (result === "profile" ? swal("") : null));
         })
         .catch(({ response }) => {
           setError(true);

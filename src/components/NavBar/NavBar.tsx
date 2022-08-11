@@ -12,6 +12,9 @@ const NavBar: React.FC = () => {
   const [openLoginModal, setOpenLoginModal] = useState<boolean>(false);
   const handleOpenLoginModal = () => setOpenLoginModal(true);
   const handleCloseLoginModal = () => setOpenLoginModal(false);
+  const [openProfileModal, setOpenProfileModal] = useState<boolean>(false);
+  const handleOpenProfileModal = () => setOpenProfileModal(true);
+  const handleCloseProfileModal = () => setOpenProfileModal(false);
 
   return (
     <div className="header">
@@ -70,8 +73,13 @@ const NavBar: React.FC = () => {
             open={openLoginModal}
             handleOpen={handleOpenLoginModal}
             handleClose={handleCloseLoginModal}
+            handleOpenProfileModal={handleOpenProfileModal}
           />
-          <ProfileModal />
+          <ProfileModal
+            open={openProfileModal}
+            handleOpen={handleOpenProfileModal}
+            handleClose={handleCloseProfileModal}
+          />
         </div>
       </nav>
     </div>
