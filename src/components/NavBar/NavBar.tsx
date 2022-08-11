@@ -5,7 +5,11 @@ import SignUpModal from "../Modals/SignUpModal";
 import LoginModal from "../Modals/LoginModal";
 import ProfileModal from "../Modals/ProfileModal";
 
-const NavBar: React.FC = () => {
+interface NavBarProps {
+  user: any;
+}
+
+const NavBar: React.FC<NavBarProps> = ({ user }) => {
   const [openSignUpModal, setOpenSignUpModal] = useState<boolean>(false);
   const handleOpenSignUpModal = () => setOpenSignUpModal(true);
   const handleCloseSignUpModal = () => setOpenSignUpModal(false);
@@ -15,6 +19,11 @@ const NavBar: React.FC = () => {
   const [openProfileModal, setOpenProfileModal] = useState<boolean>(false);
   const handleOpenProfileModal = () => setOpenProfileModal(true);
   const handleCloseProfileModal = () => setOpenProfileModal(false);
+
+  const handleLogOut = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  };
 
   return (
     <div className="header">
@@ -50,18 +59,35 @@ const NavBar: React.FC = () => {
                 Favorites
               </a>
             </li>
-
-            <li className="nav-item">
-              <a className="nav-link">Login</a>
-            </li>
-            <li className="nav-item">
-              <a
-                className="nav-link signup__button primary__button"
-                onClick={handleOpenSignUpModal}
-              >
-                Sign Up
-              </a>
-            </li>
+            {user && (
+              <>
+                <li className="nav-item">
+                  <a className="nav-link">{user.first_name}</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" onClick={handleLogOut}>
+                    Log Out
+                  </a>
+                </li>
+              </>
+            )}
+            {!user && (
+              <>
+                <li className="nav-item">
+                  <a className="nav-link" onClick={handleOpenLoginModal}>
+                    Login
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a
+                    className="nav-link signup__button primary__button"
+                    onClick={handleOpenSignUpModal}
+                  >
+                    Sign Up
+                  </a>
+                </li>
+              </>
+            )}
           </ul>
           <SignUpModal
             open={openSignUpModal}

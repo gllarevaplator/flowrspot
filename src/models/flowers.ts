@@ -5,6 +5,7 @@ export interface Flowers {
     sightings: number;
     profile_picture?: string;
     favorite: Boolean;
+    user?: any;
   }
 
   export interface FlowersList {

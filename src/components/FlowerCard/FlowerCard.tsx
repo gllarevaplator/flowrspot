@@ -10,14 +10,19 @@ const FlowerCard: React.FC<Flowers> = ({
   sightings,
   profile_picture,
   favorite,
+  user,
 }) => {
   const favoriteFlower = favorite ? favoriteIcon : nonFavoriteIcon;
 
   return (
     <div className="card">
-      <div className="favorite__flower">
-        <img src={favoriteFlower} />
-      </div>
+      {user && (
+        <>
+          <div className="favorite__flower">
+            <img src={favoriteFlower} />
+          </div>
+        </>
+      )}
       <div className="card__body">
         <img src={profile_picture} alt="" className="card__image" />
         <div className="image__overlay"></div>

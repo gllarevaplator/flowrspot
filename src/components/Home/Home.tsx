@@ -5,7 +5,11 @@ import { getFlowers } from "../../services/getFlowers";
 import { Flowers } from "../../models/flowers";
 import FlowerCard from "../FlowerCard/FlowerCard";
 
-const Home: React.FC = () => {
+interface HomeProps {
+  user: any;
+}
+
+const Home: React.FC<HomeProps> = ({ user }) => {
   const [flowers, setFlowers] = useState<[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -32,6 +36,7 @@ const Home: React.FC = () => {
             sightings={flower.sightings}
             profile_picture={flower.profile_picture}
             favorite={flower.favorite}
+            user={user}
           />
         ))}
       </div>

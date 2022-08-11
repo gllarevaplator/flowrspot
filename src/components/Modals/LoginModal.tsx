@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextFieldInput from "../TextField/TextField";
 import TextField from "@mui/material/TextField";
+import ProfileModal from "./ProfileModal";
 
 interface FormProps {
   email: string;
@@ -21,6 +22,7 @@ const LoginModal: React.FC<ModalProps> = ({
   open,
   handleOpen,
   handleClose,
+  handleOpenProfileModal,
 }) => {
   const [error, setError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -49,9 +51,9 @@ const LoginModal: React.FC<ModalProps> = ({
       await post("/users/login", values)
         .then(({ data: user }) => {
           localStorage.setItem("token", user.auth_token);
+          console.log(user.auth_token);
         })
         .then((e) => {
-          handleClose();
           handleReset(e);
           setError(false);
           setErrorMessage("");
@@ -59,13 +61,21 @@ const LoginModal: React.FC<ModalProps> = ({
             title: "Congratulations! You have successfully logged in!",
             icon: "success",
             buttons: {
-              confirm: { text: "OK", className: "primary__button text-center" },
-              profile: {
+              deny: { text: "OK", className: "primary__button text-center" },
+              confirm: {
                 text: "PROFILE",
                 className: "primary__button text-center",
               },
             },
-          }).then((result) => (result === "profile" ? swal("") : null));
+          }).then((response) => {
+            if (response === true) {
+              handleClose();
+              handleOpenProfileModal();
+            } else {
+              handleClose();
+              window.location.href = "/";
+            }
+          });
         })
         .catch(({ response }) => {
           setError(true);
@@ -73,6 +83,7 @@ const LoginModal: React.FC<ModalProps> = ({
         });
     },
   });
+
   return (
     <>
       <Modal
