@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import ModalProps from "../../models/modalProps";
 import { post } from "../../services/apiService";
-import { Formik, useFormik } from "formik";
+import { getUserInfo } from "../../services/getUser";
+import { useFormik } from "formik";
+import { modalStyle } from "./modalStyles/modalStyle";
 import * as Yup from "yup";
 import "./modalStyles/modalStyle.css";
-import { modalStyle } from "./modalStyles/modalStyle";
 import swal from "sweetalert";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextFieldInput from "../TextField/TextField";
-import TextField from "@mui/material/TextField";
-import ProfileModal from "./ProfileModal";
 
 interface FormProps {
   email: string;
@@ -23,6 +22,7 @@ const LoginModal: React.FC<ModalProps> = ({
   handleOpen,
   handleClose,
   handleOpenProfileModal,
+  userInfoCallback,
 }) => {
   const [error, setError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -49,9 +49,9 @@ const LoginModal: React.FC<ModalProps> = ({
     }),
     onSubmit: async () => {
       await post("/users/login", values)
-        .then(({ data: user }) => {
+        .then(async ({ data: user }) => {
           localStorage.setItem("token", user.auth_token);
-          console.log(user.auth_token);
+          getUserInfo().then((userInfo) => userInfoCallback(userInfo));
         })
         .then((e) => {
           handleReset(e);

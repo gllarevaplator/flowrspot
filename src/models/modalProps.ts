@@ -9,4 +9,6 @@ export default interface ModalProps {
   handleOpenProfileModal?: any;
   handleCloseProfileModal?: () => void;
   user?: any;
+  userFromLogin?: any;
+  userInfoCallback?: any;
 }

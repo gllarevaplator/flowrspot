@@ -1,9 +1,11 @@
-import React, { useState } from "react";
-import logo from "../../icons/old.svg";
-import "./navBar.css";
+import React, { useState, useCallback } from "react";
+import { Link } from "react-router-dom";
 import SignUpModal from "../Modals/SignUpModal";
 import LoginModal from "../Modals/LoginModal";
 import ProfileModal from "../Modals/ProfileModal";
+import Avatar from "@mui/material/Avatar";
+import logo from "../../icons/old.svg";
+import "./navBar.css";
 
 interface NavBarProps {
   user: any;
@@ -19,18 +21,18 @@ const NavBar: React.FC<NavBarProps> = ({ user }) => {
   const [openProfileModal, setOpenProfileModal] = useState<boolean>(false);
   const handleOpenProfileModal = () => setOpenProfileModal(true);
   const handleCloseProfileModal = () => setOpenProfileModal(false);
+  const [profileModalUserInfo, setProfileModalUserInfo] = useState(null);
 
-  const handleLogOut = () => {
-    localStorage.removeItem("token");
-    window.location.href = "/";
-  };
+  const userCallback = useCallback((userInfo: any) => {
+    setProfileModalUserInfo(userInfo);
+  }, []);
 
   return (
     <div className="header">
       <nav className="navbar navbar-expand-lg" style={{ width: "100%" }}>
-        <a className="navbar-brand" href="/">
+        <Link className="navbar-brand" to="/">
           <img src={logo} />
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -45,19 +47,19 @@ const NavBar: React.FC<NavBarProps> = ({ user }) => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <Link className="nav-link" to="/flowers">
                 Flowers
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <Link className="nav-link" to="/latest-sightings">
                 Latest Sightings
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <Link className="nav-link" to="#">
                 Favorites
-              </a>
+              </Link>
             </li>
             {user && (
               <>
@@ -65,8 +67,11 @@ const NavBar: React.FC<NavBarProps> = ({ user }) => {
                   <a className="nav-link">{user.first_name}</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" onClick={handleLogOut}>
-                    Log Out
+                  <a
+                    className="nav-link avatar__navbar"
+                    onClick={handleOpenProfileModal}
+                  >
+                    <Avatar className="avatar__navbar">PG</Avatar>
                   </a>
                 </li>
               </>
@@ -74,7 +79,11 @@ const NavBar: React.FC<NavBarProps> = ({ user }) => {
             {!user && (
               <>
                 <li className="nav-item">
-                  <a className="nav-link" onClick={handleOpenLoginModal}>
+                  <a
+                    className="nav-link"
+                    id="login_button"
+                    onClick={handleOpenLoginModal}
+                  >
                     Login
                   </a>
                 </li>
@@ -83,7 +92,7 @@ const NavBar: React.FC<NavBarProps> = ({ user }) => {
                     className="nav-link signup__button primary__button"
                     onClick={handleOpenSignUpModal}
                   >
-                    Sign Up
+                    New Account
                   </a>
                 </li>
               </>
@@ -100,11 +109,14 @@ const NavBar: React.FC<NavBarProps> = ({ user }) => {
             handleOpen={handleOpenLoginModal}
             handleClose={handleCloseLoginModal}
             handleOpenProfileModal={handleOpenProfileModal}
+            userInfoCallback={userCallback}
           />
           <ProfileModal
             open={openProfileModal}
             handleOpen={handleOpenProfileModal}
             handleClose={handleCloseProfileModal}
+            userFromLogin={profileModalUserInfo}
+            user={user}
           />
         </div>
       </nav>

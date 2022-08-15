@@ -1,41 +1,21 @@
 import React, { useState, useEffect } from "react";
+import "./modalStyles/modalStyle.css";
 import Modal from "@mui/material/Modal";
 import ModalProps from "../../models/modalProps";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { Box } from "@mui/material";
+import { Avatar, Box } from "@mui/material";
 import { modalStyle } from "./modalStyles/modalStyle";
-import { getUserInfo } from "../../services/getUser";
 
 const ProfileModal: React.FC<ModalProps> = ({
   open,
   handleOpen,
   handleClose,
+  userFromLogin,
+  user,
 }) => {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [user, setUser] = useState<any>(null);
-
-  useEffect(() => {
-    const getInfo = async () => {
-      const userData = await getUserInfo();
-      setUser(userData);
-      setLoading(false);
-    };
-    getInfo();
-  }, []);
-
   const handleLogout = () => {
-    localStorage.removeItem("user");
+    localStorage.removeItem("token");
     window.location.href = "/";
   };
-
-  const loadingData = () => {
-    return <p>LOADINGG</p>;
-  };
-
-  if (loading) {
-    loadingData();
-  }
 
   return (
     <div>
@@ -45,43 +25,55 @@ const ProfileModal: React.FC<ModalProps> = ({
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalStyle}>
-          <div className="modal__header">
-            <Typography
-              id="modal-modal-title"
-              variant="h5"
-              component="h2"
-              className="text-center mb-4"
-            >
-              Profile Modal
-            </Typography>
+          <div className="d-flex justify-content-end">
             <button
               type="button"
               className="btn-close"
               aria-label="Close"
               onClick={() => {
-                handleLogout();
-                handleClose();
+                if (userFromLogin) {
+                  window.location.href = "/";
+                  handleClose();
+                } else {
+                  handleClose();
+                }
               }}
             ></button>
           </div>
-          {user && (
+          {user || userFromLogin ? (
             <>
-              <Typography
-                id="modal-modal-description"
-                style={{ color: "#000" }}
-                sx={{ mt: 2 }}
-              >
-                {user.first_name}
-              </Typography>
-              <Typography
-                id="modal-modal-description"
-                style={{ color: "#000" }}
-                sx={{ mt: 2 }}
-              >
-                {user.last_name}
-              </Typography>
-              <button onClick={handleLogout}>LogOut</button>
+              <div className="d-flex mt-4">
+                <Avatar sx={{ width: 60, height: 60 }} className="mb-5">
+                  {user?.first_name || userFromLogin?.first_name}
+                </Avatar>
+                <div className="mt-2 avatar__description">
+                  <h4>
+                    {user?.first_name || userFromLogin?.first_name}{" "}
+                    {user?.last_name || userFromLogin?.last_name}
+                  </h4>
+                  <p className="paragraph__info">
+                    {user?.id || userFromLogin?.id} Sightings
+                  </p>
+                </div>
+              </div>
+              <p className="paragraph__info">First Name</p>
+              <h5 className="user__firstname">
+                {user?.first_name || userFromLogin?.first_name}
+              </h5>
+              <p className="paragraph__info">Last Name</p>
+              <h5>{user?.last_name || userFromLogin?.last_name}</h5>
+
+              <div className="d-flex justify-content-center button__wrapper">
+                <button
+                  onClick={handleLogout}
+                  className="primary__button logout__button"
+                >
+                  Log Out
+                </button>
+              </div>
             </>
+          ) : (
+            <p>Something went wrong...</p>
           )}
         </Box>
       </Modal>

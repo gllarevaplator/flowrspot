@@ -10,3 +10,23 @@
 .swal-footer {
     text-align: center;
 }
+.button__wrapper {
+    margin-top: 100px;
+}
+.logout__button {
+    padding: 10px 24px;
+    border-radius: 5px;
+}
+.avatar__description {
+    margin-left: 20px;
+}
+.avatar__description h4 {
+    margin-bottom: 0;
+}
+.paragraph__info {
+    margin: 0;
+    font-size: 13px;
+}
+.user__firstname {
+    margin-bottom: 30px;
+}

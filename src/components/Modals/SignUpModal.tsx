@@ -66,30 +66,28 @@ const SignUpModal: React.FC<ModalProps> = ({
         .required("Password is Required"),
     }),
     onSubmit: async () => {
-      // await post("/users/register", values)
-      //   .then((e) => {
-      handleClose();
-      //     handleReset(e);
-      //     setError(false);
-      //     setErrorMessage("");
-      swal({
-        title:
-          "Congratulations! You have successfully signed up for FlowrSpot!",
-        icon: "success",
-        buttons: {
-          confirm: {
-            text: "OK",
-            className: "primary__button text-center",
-          },
-        },
-      }).then(handleOpenLoginModal);
-      // reset the form
-      // })
-      // .then()
-      // .catch(({ response }) => {
-      //   setError(true);
-      //   setErrorMessage(response.data.error);
-      // });
+      await post("/users/register", values)
+        .then((e) => {
+          handleClose();
+          handleReset(e);
+          setError(false);
+          setErrorMessage("");
+          swal({
+            title:
+              "Congratulations! You have successfully signed up for FlowrSpot!",
+            icon: "success",
+            buttons: {
+              confirm: {
+                text: "OK",
+                className: "primary__button text-center",
+              },
+            },
+          }).then(handleOpenLoginModal);
+        })
+        .catch(({ response }) => {
+          setError(true);
+          setErrorMessage(response.data.error);
+        });
     },
   });
 

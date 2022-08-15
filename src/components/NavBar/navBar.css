@@ -8,9 +8,9 @@
 }
 .primary__button {
     background: linear-gradient(#ECBCB3, #EAA79E);
-    color: #fff !important;
     box-sizing: border-box;
-    width: 100%;
+    color: #fff;
+    cursor: pointer;
 }
 .primary__button:hover {
     background: linear-gradient(#dba298, #d87f73);
@@ -24,6 +24,10 @@
     cursor: pointer;
     text-align: center;
     border-radius: 30px;
+    padding: 8px 30px !important;
+}
+#login_button {
+    color:#d87f73 !important;
 }
 
 @media only screen and (min-width: 1024px) {
@@ -40,6 +44,10 @@
         }
         .nav-item {
             margin-left: 40px;
+        }
+        .avatar__navbar {
+            margin-top: -4px;
+            padding-bottom: 0;
         }
 }
 
@@ -58,7 +66,7 @@
         padding-top: 50px;
     }
     .signup__button {
-        width: 130px !important;
+        width: 170px !important;
         text-align: center;
         margin-top: 10px;
     }

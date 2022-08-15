@@ -27,9 +27,15 @@
 }
 .search__icon {
     position: absolute;
-    bottom: 27px;
+    bottom: 30px;
     right: 30px;
     cursor: pointer;
+}
+.search__button {
+    background: none;
+}
+.white__text {
+    color: #fff;
 }
 
 

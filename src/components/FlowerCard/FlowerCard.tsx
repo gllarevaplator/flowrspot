@@ -27,8 +27,8 @@ const FlowerCard: React.FC<Flowers> = ({
         <img src={profile_picture} alt="" className="card__image" />
         <div className="image__overlay"></div>
         <div className="card__description">
-          <h4>{name}</h4>
-          <p>{latin_name}</p>
+          <h4 className="white__text ">{name}</h4>
+          <p className="white__text text-center">{latin_name}</p>
         </div>
       </div>
       <div className="card__button text-center">
