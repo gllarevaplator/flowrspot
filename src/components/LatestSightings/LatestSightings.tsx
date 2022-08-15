@@ -42,6 +42,8 @@ const LatestSightings: React.FC = () => {
             longitude={sighting.longitude}
             latitude={sighting.latitude}
             description={sighting.description}
+            flower={sighting.flower}
+            user={sighting?.user}
           />
         ))}
       </div>

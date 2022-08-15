@@ -10,7 +10,7 @@ export interface Sightings{
     longitude: number;
     latitude: number;
     created_at?: Date | string;
-    user?: object;
+    user?: any;
     flower?: Flowers;
 }
 

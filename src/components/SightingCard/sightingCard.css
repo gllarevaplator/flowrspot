@@ -1,50 +1,47 @@
-/* .card {
+.sighting__card {
     position: relative;
     border: 0 !important;
 }
-.card__body {
+.sighting__card__body {
     position: relative;
 }
-.card__description {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    bottom: 4rem;
-    font-size: 15px;
+.sightings__card__body {
+    box-shadow: 0px 3px 10px #ddd;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
-.card__description h4 {
-    color: #fff;
-    text-align: center;
-    margin: 0;
+.sighting__card__description {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+    color: #949EA0;
+    font-weight: 500;
 }
-.card__description p {
-    font-style: italic;
-}
-.card__image {
-    border-radius: 5px;
+.sighting__card__image {
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     width: 100%;
-    height: 30rem;
+    height: 25rem;
     object-fit: cover;
     overflow: hidden;
 }
-.image__overlay {
+.sighting__image__overlay {
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
   position: absolute; 
   bottom: 0;
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.779));
   width: 100%;
   height: 100%;
-  border-radius: 5px;
 }
-.card__button {
+.sighting__card__button {
     position: absolute;
     top: 21rem;
     width: 100%;
 }
-.card__button > span {
+.sighting__card__button > span {
     background: rgba(0, 0, 0, 0.5);
     border-radius: 25px;
     color: #fff;
@@ -64,4 +61,7 @@
     border-radius: 50%;
     width: 10px;
     height: 10px;
-} */
+}
+.sighting__likes, .sighting__comments {
+    color: #929292;
+}
