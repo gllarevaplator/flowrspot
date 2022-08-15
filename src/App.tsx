@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "./components/NavBar/NavBar";
 import Home from "./components/Home/Home";
-import Sighting from "./components/LatestSightings/Sighting";
+import LatestSightings from "./components/LatestSightings/LatestSightings";
 import { getUserInfo } from "./services/getUser";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
@@ -22,7 +22,7 @@ const App: React.FC = () => {
         <>
           <Route path="/" element={<Home user={user} />} />
           <Route path="/flowers" element={<Home user={user} />} />
-          <Route path="/latest-sightings" element={<Sighting />} />
+          <Route path="/latest-sightings" element={<LatestSightings />} />
         </>
       </Routes>
     </div>

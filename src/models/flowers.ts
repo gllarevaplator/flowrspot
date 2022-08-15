@@ -3,11 +3,9 @@ export interface Flowers {
     name: string;
     latin_name: string;
     sightings: number;
-    profile_picture?: string;
+    profile_picture: string;
     favorite: Boolean;
     user?: any;
   }
 
-  export interface FlowersList {
-    flowers: Flowers[];
-  }
+  export type FlowersList = Flowers[];

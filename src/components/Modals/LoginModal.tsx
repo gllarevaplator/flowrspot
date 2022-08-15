@@ -108,6 +108,8 @@ const LoginModal: React.FC<ModalProps> = ({
               onClick={(e) => {
                 handleClose();
                 handleReset(e);
+                setError(false);
+                setErrorMessage("");
               }}
             ></button>
           </div>

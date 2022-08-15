@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import DiscoverFlowers from "../DiscoverFlowers/DiscoverFlowers";
 import { getFlowers } from "../../services/getFlowers";
-import { Flowers } from "../../models/flowers";
+import { Flowers, FlowersList } from "../../models/flowers";
 import FlowerCard from "../FlowerCard/FlowerCard";
 import { get } from "../../services/apiService";
 import "./home.css";
@@ -11,7 +11,7 @@ interface HomeProps {
 }
 
 const Home: React.FC<HomeProps> = ({ user }) => {
-  const [flowers, setFlowers] = useState<[]>([]);
+  const [flowers, setFlowers] = useState<[] | FlowersList>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [search, setSearch] = useState<string>("");
   const [searchedFlowers, setSearchedFlowers] = useState<[]>([]);
@@ -20,7 +20,7 @@ const Home: React.FC<HomeProps> = ({ user }) => {
 
   useEffect(() => {
     getFlowers()
-      .then((data) => setFlowers(data))
+      .then((flowers: FlowersList) => setFlowers(flowers))
       .then(() => setLoading(false))
       .catch((err) => console.log(err));
   }, []);
@@ -48,7 +48,7 @@ const Home: React.FC<HomeProps> = ({ user }) => {
     }
   };
 
-  const filteredFlowers: [] | Flowers =
+  const filteredFlowers: FlowersList =
     searchedFlowers.length > 0 &&
     typeof search === "string" &&
     search.trim().length > 0
@@ -67,7 +67,7 @@ const Home: React.FC<HomeProps> = ({ user }) => {
       )}
       {loading ? <p className="text-center m-4">Loading...</p> : null}
       {!searchFlowersFound && (
-        <div className="container grid-container mt-4">
+        <div className="m-4 grid-container mt-4">
           {filteredFlowers.map((flower: Flowers) => (
             <FlowerCard
               id={flower.id}
