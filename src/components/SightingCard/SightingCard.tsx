@@ -18,7 +18,6 @@ const SightingCard: React.FC<Sightings> = ({
   flower,
   user,
 }) => {
-  console.log(user);
   return (
     <div className="sighting__card m-2">
       <div className="sighting__location">

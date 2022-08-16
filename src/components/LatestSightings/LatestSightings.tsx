@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SightingCard from "../SightingCard/SightingCard";
+import CreateSightingModal from "../Modals/CreateSightingModal";
 import { Sightings, sightingsList } from "../../models/sightings";
 import { getSightings } from "../../services/getSightings";
 import "./latestSightings.css";
@@ -7,6 +8,11 @@ import "./latestSightings.css";
 const LatestSightings: React.FC = () => {
   const [sightings, setSightings] = useState<[] | sightingsList>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [openCreateSightingModal, setOpenCreateSightingModal] =
+    useState<boolean>(false);
+  const handleOpenCreateSightingModal = () => setOpenCreateSightingModal(true);
+  const handleCloseCreateSightingModal = () =>
+    setOpenCreateSightingModal(false);
 
   useEffect(() => {
     getSightings()
@@ -25,7 +31,10 @@ const LatestSightings: React.FC = () => {
             </p>
           </div>
           <div className="col-md-6 add__sightings__container">
-            <button className="primary__button px-5 py-3 add__sightings__button">
+            <button
+              className="primary__button px-5 py-3 add__sightings__button"
+              onClick={handleOpenCreateSightingModal}
+            >
               + Add Sighting
             </button>
           </div>
@@ -47,6 +56,11 @@ const LatestSightings: React.FC = () => {
           />
         ))}
       </div>
+      <CreateSightingModal
+        open={openCreateSightingModal}
+        handleOpen={handleOpenCreateSightingModal}
+        handleClose={handleCloseCreateSightingModal}
+      />
     </>
   );
 };

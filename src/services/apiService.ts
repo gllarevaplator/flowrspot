@@ -7,6 +7,6 @@ export const get = (endpoint: string): Promise<any> => {
   return axios.get(baseURL + endpoint);
 };
 
-export const post = (endpoint: string, create: Object): Promise<any> => {
-  return axios.post(baseURL + endpoint, create);
+export const post = (endpoint: string, create: object, headers?: object): Promise<any> => {
+  return axios.post(baseURL + endpoint, create, headers);
 };

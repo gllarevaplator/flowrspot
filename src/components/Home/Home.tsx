@@ -25,6 +25,8 @@ const Home: React.FC<HomeProps> = ({ user }) => {
       .catch((err) => console.log(err));
   }, []);
 
+  console.log(flowers);
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
     if (typeof search === "string" && search.trim().length == 0)
