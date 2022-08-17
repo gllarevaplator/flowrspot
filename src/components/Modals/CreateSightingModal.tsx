@@ -1,41 +1,27 @@
 import React, { useState, useEffect } from "react";
 import ModalProps from "../../models/modalProps";
 import { post } from "../../services/apiService";
-import { useFormik, validateYupSchema } from "formik";
+import { useFormik } from "formik";
 import { modalStyle } from "./modalStyles/modalStyle";
 import "./modalStyles/modalStyle.css";
 import * as Yup from "yup";
-import swal from "sweetalert";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextFieldInput from "../TextField/TextField";
 
-interface FormikInitialValues {
-  flower_id: number | string;
-  name: string;
-  description: string;
-  latitude: number | string;
-  longitude: number | string;
-  picture: string;
-}
-
 const CreateSightingModal: React.FC<ModalProps> = ({
   open,
   handleOpen,
   handleClose,
+  sightings,
+  newSightingCallback,
+  loadingCallback,
 }) => {
-  const [picture, setPicture] = useState<null | string>(null);
+  const [picture, setPicture] = useState<any>(null);
   const [profilePictureError, setProfilePictureError] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
-
-  useEffect(() => {
-    return () => {
-      setPicture(null);
-      setProfilePictureError("");
-    };
-  }, []);
 
   const {
     values,
@@ -45,7 +31,7 @@ const CreateSightingModal: React.FC<ModalProps> = ({
     handleBlur,
     handleReset,
     touched,
-  } = useFormik<FormikInitialValues>({
+  } = useFormik({
     initialValues: {
       flower_id: "",
       name: "",
@@ -73,30 +59,40 @@ const CreateSightingModal: React.FC<ModalProps> = ({
         .max(1000000000, "Latitude must be longer!")
         .required("Longitude is Required"),
     }),
-    onSubmit: async () => {
-      const allValues = { ...values, picture };
-      const token = localStorage.getItem("token");
-      try {
-        // const response = post("/sightings", allValues, {
-        //   headers: {
-        //     Authorization: token,
-        //   },
-        // });
-        // console.log(response);
-      } catch (err) {
-        console.log(err);
-      }
+    onSubmit: () => {
+      const data = new FormData();
+      data.append("picture", picture);
+      data.append("flower_id", values.flower_id);
+      data.append("name", values.name);
+      data.append("description", values.description);
+      data.append("latitude", values.latitude);
+      data.append("longitude", values.longitude);
+      const token: any = localStorage.getItem("token");
+      loadingCallback(true);
+      post("/sightings", data, {
+        headers: {
+          Authorization: token,
+          "Content-Type": `multipart/form-data`,
+        },
+      })
+        .then(({ data }) => {
+          newSightingCallback([data.sighting, ...sightings]);
+          handleClose();
+          loadingCallback(false);
+        })
+        .then((e) => {
+          handleReset(e);
+        })
+        .catch((err) => {
+          setError(true);
+          console.log(err.response);
+        });
     },
   });
-  console.log(picture);
 
   const handleImageUpload = (e: any) => {
     const image = e.currentTarget.files[0];
-    let fileReader: any = new FileReader();
-    fileReader.onload = () => {
-      setPicture(fileReader.result);
-    };
-    fileReader.readAsDataURL(image);
+    setPicture(image);
   };
 
   return (
@@ -114,7 +110,7 @@ const CreateSightingModal: React.FC<ModalProps> = ({
               component="h2"
               className="text-center mb-4"
             >
-              Welcome Back
+              Create a new Sighting
             </Typography>
             <button
               type="button"
@@ -211,7 +207,7 @@ const CreateSightingModal: React.FC<ModalProps> = ({
               type="submit"
               className="btn submit__button primary__button mt-4 p-3"
             >
-              Login to your Account
+              Create
             </button>
           </form>
         </Box>

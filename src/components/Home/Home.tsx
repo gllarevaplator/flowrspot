@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
-import DiscoverFlowers from "../DiscoverFlowers/DiscoverFlowers";
+import DiscoverFlowers from "../Flowers/DiscoverFlowers/DiscoverFlowers";
 import { getFlowers } from "../../services/getFlowers";
 import { Flowers, FlowersList } from "../../models/flowers";
-import FlowerCard from "../FlowerCard/FlowerCard";
+import FlowerCard from "../Flowers/FlowerCard/FlowerCard";
 import { get } from "../../services/apiService";
 import "./home.css";
 
@@ -24,8 +24,6 @@ const Home: React.FC<HomeProps> = ({ user }) => {
       .then(() => setLoading(false))
       .catch((err) => console.log(err));
   }, []);
-
-  console.log(flowers);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);

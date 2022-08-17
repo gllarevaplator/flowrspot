@@ -1,7 +1,7 @@
 import React from "react";
-import { Flowers } from "../../models/flowers";
-import favoriteIcon from "../../icons/star-filled.svg";
-import nonFavoriteIcon from "../../icons/star-outlined.svg";
+import { Flowers } from "../../../models/flowers";
+import favoriteIcon from "../../../icons/star-filled.svg";
+import nonFavoriteIcon from "../../../icons/star-outlined.svg";
 import "./flowerCard.css";
 
 const FlowerCard: React.FC<Flowers> = ({

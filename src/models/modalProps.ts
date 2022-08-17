@@ -11,4 +11,7 @@ export default interface ModalProps {
   user?: any;
   userFromLogin?: any;
   userInfoCallback?: any;
+  newSightingCallback?: any;
+  sightings?: any;
+  loadingCallback?: any;
 }

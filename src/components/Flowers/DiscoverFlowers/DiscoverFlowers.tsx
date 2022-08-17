@@ -1,6 +1,6 @@
 import React from "react";
 import "./discoverFlowers.css";
-import searchIcon from "../../icons/search.svg";
+import searchIcon from "../../../icons/search.svg";
 
 interface DiscoverFlowersProps {
   search: string;
