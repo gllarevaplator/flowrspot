@@ -15,7 +15,7 @@ const FlowerCard: React.FC<Flowers> = ({
   const favoriteFlower = favorite ? favoriteIcon : nonFavoriteIcon;
 
   return (
-    <div className="card">
+    <div className="card" data-testid="flower">
       {user && (
         <>
           <div className="favorite__flower">

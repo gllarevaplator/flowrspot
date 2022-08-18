@@ -55,6 +55,7 @@ const LoginModal: React.FC<ModalProps> = ({
         })
         .then((e) => {
           handleReset(e);
+          handleClose();
           setError(false);
           setErrorMessage("");
           swal({
