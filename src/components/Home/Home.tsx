@@ -5,7 +5,7 @@ import FlowerCard from "../Flowers/FlowerCard/FlowerCard";
 import {
   useGetAllFlowersQuery,
   useGetSearchedFlowersQuery,
-} from "../../features/counter/api/flowersApi";
+} from "../../features/api/flowersApi";
 import { get } from "../../services/apiService";
 import "./home.css";
 
