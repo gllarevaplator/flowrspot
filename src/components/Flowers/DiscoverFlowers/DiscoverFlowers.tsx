@@ -18,7 +18,7 @@ const DiscoverFlowers: React.FC<DiscoverFlowersProps> = ({
       <div className="discover__description text-center">
         <h1 className="white__text">Discover flowers around you</h1>
         <p className="white__text">Explore between more than 8.427 sightings</p>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(event) => handleSubmit(event)}>
           <div>
             <input
               type="search"

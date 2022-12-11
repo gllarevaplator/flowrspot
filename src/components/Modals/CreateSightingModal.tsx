@@ -39,6 +39,7 @@ const CreateSightingModal: React.FC<ModalProps> = ({
       latitude: "",
       longitude: "",
       picture: "",
+      city: "",
     },
     validationSchema: Yup.object({
       flower_id: Yup.number()
@@ -84,6 +85,7 @@ const CreateSightingModal: React.FC<ModalProps> = ({
           handleReset(e);
         })
         .catch((err) => {
+          loadingCallback(false);
           setError(true);
           console.log(err.response);
         });

@@ -1,14 +1,16 @@
 export default interface TextFieldProps {
   id: string;
   name: string;
-  label?: string;
+  label: string;
   type: string;
-  variant: any;
-  sx: Object;
+  variant: "outlined" | "standard" | "filled";  
+  sx: object;
   value?: number | string;
-  touched?: any;
+  touched?: boolean;
   onChange?: (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
-  onBlur?: (e: any) => void;
-  errors?: any;
+  onBlur?: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
+  errors?: string;
 }
+
+

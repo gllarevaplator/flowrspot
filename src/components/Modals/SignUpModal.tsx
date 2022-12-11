@@ -26,7 +26,6 @@ interface FormProps {
 
 const SignUpModal: React.FC<ModalProps> = ({
   open,
-  handleOpen,
   handleClose,
   handleOpenLoginModal,
 }) => {
@@ -65,8 +64,8 @@ const SignUpModal: React.FC<ModalProps> = ({
         .max(25, "Password must be shorter!!")
         .required("Password is Required"),
     }),
-    onSubmit: async () => {
-      await post("/users/register", values)
+    onSubmit: () => {
+      post("/users/register", values)
         .then((e) => {
           handleClose();
           handleReset(e);

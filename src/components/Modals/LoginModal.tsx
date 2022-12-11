@@ -19,7 +19,6 @@ interface FormProps {
 
 const LoginModal: React.FC<ModalProps> = ({
   open,
-  handleOpen,
   handleClose,
   handleOpenProfileModal,
   userInfoCallback,
@@ -47,9 +46,9 @@ const LoginModal: React.FC<ModalProps> = ({
         .max(25, "Password must be shorter!!")
         .required("Password is Required"),
     }),
-    onSubmit: async () => {
-      await post("/users/login", values)
-        .then(async ({ data: user }) => {
+    onSubmit: () => {
+      post("/users/login", values)
+        .then(({ data: user }) => {
           localStorage.setItem("token", user.auth_token);
           getUserInfo().then((userInfo) => userInfoCallback(userInfo));
         })

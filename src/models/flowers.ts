@@ -1,3 +1,5 @@
+import User from "./user";
+
 export interface Flowers {
     id: number;
     name: string;

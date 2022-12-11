@@ -10,6 +10,13 @@ import "./navBar.css";
 interface NavBarProps {
   user: any;
 }
+interface User {
+  user: {
+    id: number;
+    name: string;
+    last_name: string;
+  };
+}
 
 const NavBar: React.FC<NavBarProps> = ({ user }) => {
   const [openSignUpModal, setOpenSignUpModal] = useState<boolean>(false);
@@ -21,9 +28,11 @@ const NavBar: React.FC<NavBarProps> = ({ user }) => {
   const [openProfileModal, setOpenProfileModal] = useState<boolean>(false);
   const handleOpenProfileModal = () => setOpenProfileModal(true);
   const handleCloseProfileModal = () => setOpenProfileModal(false);
-  const [profileModalUserInfo, setProfileModalUserInfo] = useState(null);
+  const [profileModalUserInfo, setProfileModalUserInfo] = useState<null | User>(
+    null
+  );
 
-  const userCallback = useCallback((userInfo: any) => {
+  const userCallback = useCallback((userInfo: null | User) => {
     setProfileModalUserInfo(userInfo);
   }, []);
 

@@ -10,7 +10,7 @@ interface LatestSightingsProps {
 }
 
 const LatestSightings: React.FC<LatestSightingsProps> = ({ user }) => {
-  const [sightings, setSightings] = useState<[] | sightingsList>([]);
+  const [sightings, setSightings] = useState<sightingsList>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [openCreateSightingModal, setOpenCreateSightingModal] =
     useState<boolean>(false);
@@ -19,15 +19,11 @@ const LatestSightings: React.FC<LatestSightingsProps> = ({ user }) => {
     setOpenCreateSightingModal(false);
 
   const newSightingCallback = useCallback(
-    (createdNewSighting: sightingsList) => {
-      setSightings(createdNewSighting);
-    },
+    (createdNewSighting: sightingsList) => setSightings(createdNewSighting),
     []
   );
 
-  const loadingCallback = useCallback((bool: boolean) => {
-    setLoading(bool);
-  }, []);
+  const loadingCallback = useCallback((bool: boolean) => setLoading(bool), []);
 
   useEffect(() => {
     getSightings()

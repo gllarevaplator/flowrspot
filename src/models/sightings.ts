@@ -1,4 +1,5 @@
 import { Flowers } from "./flowers";
+import User from "./user";
 
 export interface Sightings{
     id?: number; 
@@ -10,7 +11,7 @@ export interface Sightings{
     longitude: number;
     latitude: number;
     created_at?: Date | string;
-    user?: any;
+    user?: User | null;
     flower?: Flowers;
 }
 
