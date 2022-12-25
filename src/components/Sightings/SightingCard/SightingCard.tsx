@@ -14,7 +14,7 @@ const SightingCard: React.FC<Sightings> = ({
   latitude,
   description,
   flower,
-  user,
+  // user,
 }) => {
   return (
     <div className="sighting__card">
@@ -39,7 +39,7 @@ const SightingCard: React.FC<Sightings> = ({
           </div>
           <div className="sighting__profile__info">
             <h4>{flower?.name}</h4>
-            <h5>by {user?.full_name}</h5>
+            {/* <h5>by {user?.full_name}</h5> */}
           </div>
         </div>
         <div>

@@ -1,16 +1,19 @@
-import React, { useState } from "react";
-import ModalProps from "../../models/modalProps";
-import { post } from "../../services/apiService";
-import { getUserInfo } from "../../services/getUser";
+import React, { useEffect, useState } from "react";
+import { useAppDispatch } from "../../features/app/store";
+import { useSetUserCredentialsMutation } from "../../features/services/userApi";
+// import { userInfo } from "../../features/user/userSlice";
 import { useFormik } from "formik";
 import { modalStyle } from "./modalStyles/modalStyle";
-import * as Yup from "yup";
-import "./modalStyles/modalStyle.css";
-import swal from "sweetalert";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextFieldInput from "../TextField/TextField";
+import ModalProps from "../../models/modalProps";
+import swal from "sweetalert";
+import "./modalStyles/modalStyle.css";
+import * as Yup from "yup";
+import jwt_decode from "jwt-decode";
+import { useLazyGetUserInfoQuery } from "../../features/services/userApi";
 
 interface FormProps {
   email: string;
@@ -21,10 +24,18 @@ const LoginModal: React.FC<ModalProps> = ({
   open,
   handleClose,
   handleOpenProfileModal,
-  userInfoCallback,
 }) => {
-  const [error, setError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [userLogin, isError] = useSetUserCredentialsMutation();
+  const [trigger, { data, isSuccess: userSuccess, isError: userInfoError }] =
+    useLazyGetUserInfoQuery();
+  const dispatch = useAppDispatch();
+
+  // useEffect(() => {
+  //   if (userSuccess) {
+  //     dispatch(userInfo(data?.user));
+  //   }
+  // }, [userSuccess]);
 
   const {
     values,
@@ -47,16 +58,14 @@ const LoginModal: React.FC<ModalProps> = ({
         .required("Password is Required"),
     }),
     onSubmit: () => {
-      post("/users/login", values)
-        .then(({ data: user }) => {
-          localStorage.setItem("token", user.auth_token);
-          getUserInfo().then((userInfo) => userInfoCallback(userInfo));
-        })
-        .then((e) => {
-          handleReset(e);
-          handleClose();
-          setError(false);
+      userLogin({ email: values.email, password: values.password })
+        .unwrap()
+        .then((data): void => {
           setErrorMessage("");
+          const token = data.auth_token;
+          const decodedToken: { user_id: number; exp: number } =
+            jwt_decode(token);
+          trigger(decodedToken.user_id);
           swal({
             title: "Congratulations! You have successfully logged in!",
             icon: "success",
@@ -67,19 +76,21 @@ const LoginModal: React.FC<ModalProps> = ({
                 className: "primary__button text-center",
               },
             },
-          }).then((response) => {
+          }).then((response): void => {
             if (response === true) {
               handleClose();
               handleOpenProfileModal();
             } else {
               handleClose();
-              window.location.href = "/";
             }
           });
         })
-        .catch(({ response }) => {
-          setError(true);
-          setErrorMessage(response.data.error);
+        .then((e): void => {
+          handleReset(e);
+          handleClose();
+        })
+        .catch(({ data: loginError }: { data: { error: string } }) => {
+          setErrorMessage(loginError.error);
         });
     },
   });
@@ -105,10 +116,9 @@ const LoginModal: React.FC<ModalProps> = ({
               type="button"
               className="btn-close"
               aria-label="Close"
-              onClick={(e) => {
+              onClick={(e): void => {
                 handleClose();
                 handleReset(e);
-                setError(false);
                 setErrorMessage("");
               }}
             ></button>
@@ -140,7 +150,7 @@ const LoginModal: React.FC<ModalProps> = ({
               onChange={handleChange}
               errors={errors.password}
             />
-            {error && <span className="text-danger">{errorMessage}</span>}
+            {isError && <span className="text-danger">{errorMessage}</span>}
             <button
               type="submit"
               className="btn submit__button primary__button mt-4 p-3"

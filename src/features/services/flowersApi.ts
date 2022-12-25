@@ -18,17 +18,10 @@ export const flowersApi = createApi({
     reducerPath: 'flowersApi',
     baseQuery: fetchBaseQuery({baseUrl}),
     endpoints: (builder => ({
-        getAllFlowers: builder.query<FlowersApiResponse, string>({
-            query: (endpoint) => `${endpoint}`,
-        }),
-        getFlower: builder.query<Flowers, number>({
-            query: (id) => `flowers/${id}`,
-        }),
-        getSearchedFlowers: builder.query<Flowers[] | Flowers, string>({
-            query: (searchQuery) => `/flowers/search?query=${searchQuery}`,
+        getSearchedFlowers: builder.query<FlowersApiResponse, string>({
+            query: (searchQuery: string) => `/flowers/search?query=${searchQuery}`,
         })
     }))
 });
 
-export const { useGetAllFlowersQuery, useGetSearchedFlowersQuery } = flowersApi;
-
+export const { useGetSearchedFlowersQuery } = flowersApi;

@@ -6,19 +6,9 @@ import ProfileModal from "../Modals/ProfileModal";
 import Avatar from "@mui/material/Avatar";
 import logo from "../../icons/old.svg";
 import "./navBar.css";
+import { useAppSelector } from "../../features/app/store";
 
-interface NavBarProps {
-  user: any;
-}
-interface User {
-  user: {
-    id: number;
-    name: string;
-    last_name: string;
-  };
-}
-
-const NavBar: React.FC<NavBarProps> = ({ user }) => {
+const NavBar: React.FC = () => {
   const [openSignUpModal, setOpenSignUpModal] = useState<boolean>(false);
   const handleOpenSignUpModal = () => setOpenSignUpModal(true);
   const handleCloseSignUpModal = () => setOpenSignUpModal(false);
@@ -28,11 +18,11 @@ const NavBar: React.FC<NavBarProps> = ({ user }) => {
   const [openProfileModal, setOpenProfileModal] = useState<boolean>(false);
   const handleOpenProfileModal = () => setOpenProfileModal(true);
   const handleCloseProfileModal = () => setOpenProfileModal(false);
-  const [profileModalUserInfo, setProfileModalUserInfo] = useState<null | User>(
-    null
-  );
+  const [profileModalUserInfo, setProfileModalUserInfo] = useState<any>(null);
+  const userRedux = useAppSelector((state) => state.auth);
+  const { first_name } = userRedux;
 
-  const userCallback = useCallback((userInfo: null | User) => {
+  const userCallback = useCallback((userInfo: any) => {
     setProfileModalUserInfo(userInfo);
   }, []);
 
@@ -66,14 +56,14 @@ const NavBar: React.FC<NavBarProps> = ({ user }) => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="#">
+              <Link className="nav-link" to="/favorite">
                 Favorites
               </Link>
             </li>
-            {user && (
+            {first_name && (
               <>
                 <li className="nav-item">
-                  <a className="nav-link">{user.first_name}</a>
+                  <a className="nav-link">{first_name}</a>
                 </li>
                 <li className="nav-item">
                   <a
@@ -85,7 +75,7 @@ const NavBar: React.FC<NavBarProps> = ({ user }) => {
                 </li>
               </>
             )}
-            {!user && (
+            {!first_name && (
               <>
                 <li className="nav-item">
                   <a
@@ -125,7 +115,6 @@ const NavBar: React.FC<NavBarProps> = ({ user }) => {
             handleOpen={handleOpenProfileModal}
             handleClose={handleCloseProfileModal}
             userFromLogin={profileModalUserInfo}
-            user={user}
           />
         </div>
       </nav>

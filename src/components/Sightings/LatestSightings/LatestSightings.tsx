@@ -5,11 +5,7 @@ import { Sightings, sightingsList } from "../../../models/sightings";
 import { getSightings } from "../../../services/getSightings";
 import "./latestSightings.css";
 
-interface LatestSightingsProps {
-  user: object | null;
-}
-
-const LatestSightings: React.FC<LatestSightingsProps> = ({ user }) => {
+const LatestSightings: React.FC = () => {
   const [sightings, setSightings] = useState<sightingsList>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [openCreateSightingModal, setOpenCreateSightingModal] =
@@ -42,16 +38,16 @@ const LatestSightings: React.FC<LatestSightingsProps> = ({ user }) => {
               Explore between more than 8.427 sightings
             </p>
           </div>
-          {user && (
-            <div className="col-md-6 add__sightings__container">
-              <button
-                className="primary__button px-5 py-3 add__sightings__button"
-                onClick={handleOpenCreateSightingModal}
-              >
-                + Add Sighting
-              </button>
-            </div>
-          )}
+          {/* {user && ( */}
+          <div className="col-md-6 add__sightings__container">
+            <button
+              className="primary__button px-5 py-3 add__sightings__button"
+              onClick={handleOpenCreateSightingModal}
+            >
+              + Add Sighting
+            </button>
+          </div>
+          {/* )} */}
         </div>
       </div>
       {loading && <p className="text-center m-2">Loading...</p>}
@@ -67,7 +63,7 @@ const LatestSightings: React.FC<LatestSightingsProps> = ({ user }) => {
             latitude={sighting.latitude}
             description={sighting.description}
             flower={sighting.flower}
-            user={sighting?.user}
+            // user={sighting?.user}
           />
         ))}
       </div>

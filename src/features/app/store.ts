@@ -1,14 +1,18 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { flowersApi } from "../features/api/flowersApi";
+import { authApi } from "../services/userApi";
+import { flowersApi } from "../services/flowersApi";
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
+import authReducer from "../user/userSlice";
 
 const store = configureStore({
     reducer: {
+        auth: authReducer,
+        [authApi.reducerPath]: authApi.reducer,
         [flowersApi.reducerPath]: flowersApi.reducer,
     }, 
     middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(flowersApi.middleware),
+    getDefaultMiddleware().concat(flowersApi.middleware, authApi.middleware),
 });
 
 setupListeners(store.dispatch)

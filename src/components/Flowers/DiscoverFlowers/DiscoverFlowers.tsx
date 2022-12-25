@@ -5,20 +5,18 @@ import searchIcon from "../../../icons/search.svg";
 interface DiscoverFlowersProps {
   search: string;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
 const DiscoverFlowers: React.FC<DiscoverFlowersProps> = ({
   search,
   handleChange,
-  handleSubmit,
 }) => {
   return (
     <div className="discover__container">
       <div className="discover__description text-center">
         <h1 className="white__text">Discover flowers around you</h1>
         <p className="white__text">Explore between more than 8.427 sightings</p>
-        <form onSubmit={(event) => handleSubmit(event)}>
+        <form>
           <div>
             <input
               type="search"
