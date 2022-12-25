@@ -4,17 +4,17 @@ import Modal from "@mui/material/Modal";
 import ModalProps from "../../models/modalProps";
 import { Avatar, Box } from "@mui/material";
 import { modalStyle } from "./modalStyles/modalStyle";
+import { useAppSelector } from "../../features/app/store";
+import { useAppDispatch } from "../../features/app/store";
+import { logout } from "../../features/user/userSlice";
 
-const ProfileModal: React.FC<ModalProps> = ({
-  open,
-  handleOpen,
-  handleClose,
-  userFromLogin,
-  user,
-}) => {
+const ProfileModal: React.FC<ModalProps> = ({ open, handleClose }) => {
+  const user = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    window.location.href = "/";
+    dispatch(logout());
+    handleClose();
   };
 
   return (
@@ -30,38 +30,26 @@ const ProfileModal: React.FC<ModalProps> = ({
               type="button"
               className="btn-close"
               aria-label="Close"
-              onClick={() => {
-                if (userFromLogin) {
-                  window.location.href = "/";
-                  handleClose();
-                } else {
-                  handleClose();
-                }
-              }}
+              onClick={handleClose}
             ></button>
           </div>
-          {user || userFromLogin ? (
+          {user.id ? (
             <>
               <div className="d-flex mt-4">
                 <Avatar sx={{ width: 60, height: 60 }} className="mb-5">
-                  {user?.first_name || userFromLogin?.first_name}
+                  {user.first_name}
                 </Avatar>
                 <div className="mt-2 avatar__description">
                   <h4>
-                    {user?.first_name || userFromLogin?.first_name}{" "}
-                    {user?.last_name || userFromLogin?.last_name}
+                    {user.first_name} {user.last_name}
                   </h4>
-                  <p className="paragraph__info">
-                    {user?.id || userFromLogin?.id} Sightings
-                  </p>
+                  <p className="paragraph__info">{user.id} Sightings</p>
                 </div>
               </div>
               <p className="paragraph__info">First Name</p>
-              <h5 className="user__firstname">
-                {user?.first_name || userFromLogin?.first_name}
-              </h5>
+              <h5 className="user__firstname">{user.first_name}</h5>
               <p className="paragraph__info">Last Name</p>
-              <h5>{user?.last_name || userFromLogin?.last_name}</h5>
+              <h5>{user.last_name}</h5>
 
               <div className="d-flex justify-content-center button__wrapper">
                 <button

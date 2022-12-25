@@ -1,25 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import NavBar from "./components/NavBar/NavBar";
 import Home from "./components/Home/Home";
 import LatestSightings from "./components/Sightings/LatestSightings/LatestSightings";
 import Favorite from "./components/Favorite/Favorite";
-import { getUserInfo } from "./services/getUser";
 import { Routes, Route } from "react-router-dom";
 import { useLazyGetUserInfoQuery } from "./features/services/userApi";
-import { useAppDispatch } from "./features/app/store";
 import jwt_decode from "jwt-decode";
 import "./App.css";
 
-interface User {
-  user: {
-    name: string;
-    email: string;
-  };
-}
-
 const App: React.FC = () => {
   const token = localStorage.getItem("user-token");
-  const [trigger, { data, isSuccess, isError }] = useLazyGetUserInfoQuery();
+  const [trigger] = useLazyGetUserInfoQuery();
 
   useEffect(() => {
     if (token) {

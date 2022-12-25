@@ -1,8 +1,8 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import { User } from '../user/userSlice';
 
-export const authApi = createApi({
-    reducerPath: 'authApi', 
+export const userApi = createApi({
+    reducerPath: 'userApi', 
     baseQuery: fetchBaseQuery({
         baseUrl: 'https://flowrspot-api.herokuapp.com/api/v1',
     }),
@@ -22,4 +22,4 @@ export const authApi = createApi({
     })
 });
 
-export const { useSetUserCredentialsMutation, useLazyGetUserInfoQuery } = authApi;
+export const { useSetUserCredentialsMutation, useLazyGetUserInfoQuery } = userApi;

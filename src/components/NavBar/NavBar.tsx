@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from "react";
+import { useAppSelector } from "../../features/app/store";
 import { Link } from "react-router-dom";
 import SignUpModal from "../Modals/SignUpModal";
 import LoginModal from "../Modals/LoginModal";
@@ -6,7 +7,6 @@ import ProfileModal from "../Modals/ProfileModal";
 import Avatar from "@mui/material/Avatar";
 import logo from "../../icons/old.svg";
 import "./navBar.css";
-import { useAppSelector } from "../../features/app/store";
 
 const NavBar: React.FC = () => {
   const [openSignUpModal, setOpenSignUpModal] = useState<boolean>(false);
@@ -19,8 +19,8 @@ const NavBar: React.FC = () => {
   const handleOpenProfileModal = () => setOpenProfileModal(true);
   const handleCloseProfileModal = () => setOpenProfileModal(false);
   const [profileModalUserInfo, setProfileModalUserInfo] = useState<any>(null);
-  const userRedux = useAppSelector((state) => state.auth);
-  const { first_name } = userRedux;
+  const user = useAppSelector((state) => state.auth);
+  const { first_name } = user;
 
   const userCallback = useCallback((userInfo: any) => {
     setProfileModalUserInfo(userInfo);

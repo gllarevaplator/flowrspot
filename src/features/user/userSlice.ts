@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { authApi } from "../services/userApi";
+import { userApi } from "../services/userApi";
 
 export interface User {
     user: {
@@ -16,28 +16,32 @@ interface UserState {
     token: string | null,
 }
 
-const initialState: UserState = {
+let initialState: UserState = {
     id: null,
     first_name: null,
     last_name: null,
     token: null,
 }
 
-export const authSlice = createSlice({
-    name: 'auth',
+export const userSlice = createSlice({
+    name: 'userSlice',
     initialState,
     reducers: {
+        logout: (): UserState => {
+            localStorage.removeItem('user-token');
+            return initialState;
+        }, 
     },
     extraReducers: (builder) => {
         builder.addMatcher(
-          authApi.endpoints.setUserCredentials.matchFulfilled,
+          userApi.endpoints.setUserCredentials.matchFulfilled,
           (state, action: PayloadAction<{auth_token: string}>) => {
             state.token = action.payload.auth_token;
             localStorage.setItem('user-token', action.payload.auth_token)
           },
         );  
         builder.addMatcher(
-            authApi.endpoints.getUserInfo.matchFulfilled,
+            userApi.endpoints.getUserInfo.matchFulfilled,
             (state, action: PayloadAction<User>) => {
                 state.id = action.payload.user.id;
                 state.first_name = action.payload.user.first_name;
@@ -48,4 +52,6 @@ export const authSlice = createSlice({
       },
 });
 
-export default authSlice.reducer;
+export default userSlice.reducer;
+
+export const {logout} = userSlice.actions;
