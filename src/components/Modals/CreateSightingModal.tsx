@@ -65,10 +65,10 @@ const CreateSightingModal: React.FC<ModalProps> = ({
         .max(35, "Description must be shorter!")
         .required("Description is Required"),
       latitude: Yup.number()
-        .max(1000000000, "Latitude must be longer!")
+        .max(1000000000, "Latitude must be shorter!")
         .required("Latitude is Required"),
       longitude: Yup.number()
-        .max(1000000000, "Latitude must be longer!")
+        .max(1000000000, "Latitude must be shorter!")
         .required("Longitude is Required"),
     }),
     onSubmit: (): void => {
@@ -79,15 +79,25 @@ const CreateSightingModal: React.FC<ModalProps> = ({
       data.append("latitude", values.latitude);
       data.append("longitude", values.longitude);
       data.append("picture", picture);
+      const formData = {
+        flower_id: values.flower_id,
+      };
       createSighting(data)
         .unwrap()
+        .then((data) => console.log(data))
         .then((e): void => {
           handleClose();
           handleReset(e);
         })
-        .catch(({ data: createSightingError }: { data: { error: string } }) => {
-          setErrorMessage(createSightingError.error);
-        });
+        .catch(
+          ({
+            data: createSightingError,
+          }: {
+            data: { error: string };
+          }): void => {
+            if (createSightingError) setErrorMessage(createSightingError.error);
+          }
+        );
       // const token: any = localStorage.getItem("user-token");
       // loadingCallback(true);
       // post("/sightings", data, {
@@ -221,7 +231,7 @@ const CreateSightingModal: React.FC<ModalProps> = ({
             <TextFieldInput
               required
               id="Picture"
-              label="Picture"
+              label=""
               name="picture"
               type="file"
               sx={{ mb: 2, width: "100%" }}
