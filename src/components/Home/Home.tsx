@@ -7,7 +7,7 @@ import { useAppSelector } from "../../features/app/store";
 import "./home.css";
 
 const Home: React.FC = () => {
-  const user = useAppSelector((state) => state.auth);
+  const user = useAppSelector((state) => state.user);
   const [search, setSearch] = useState<string>("");
   const { data, isLoading, isSuccess } = useGetFlowersQuery(search);
 

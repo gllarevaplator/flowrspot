@@ -1,14 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
+import userReducer from "../user/userSlice";
 import { userApi } from "../services/userApi";
 import { flowersApi } from "../services/flowersApi";
 import { sightingsApi } from "../services/sightingsApi";
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
-import authReducer from "../user/userSlice";
 
 const store = configureStore({
     reducer: {
-        auth: authReducer,
+        user: userReducer,
         [userApi.reducerPath]: userApi.reducer,
         [flowersApi.reducerPath]: flowersApi.reducer,
         [sightingsApi.reducerPath]: sightingsApi.reducer,

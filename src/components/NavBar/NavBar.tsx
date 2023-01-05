@@ -18,7 +18,7 @@ const NavBar: React.FC = () => {
   const [openProfileModal, setOpenProfileModal] = useState<boolean>(false);
   const handleOpenProfileModal = () => setOpenProfileModal(true);
   const handleCloseProfileModal = () => setOpenProfileModal(false);
-  const user = useAppSelector((state) => state.auth);
+  const user = useAppSelector((state) => state.user);
   const { first_name } = user;
 
   return (

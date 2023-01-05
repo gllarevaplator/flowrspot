@@ -9,7 +9,7 @@ import { useAppDispatch } from "../../features/app/store";
 import { logout } from "../../features/user/userSlice";
 
 const ProfileModal: React.FC<ModalProps> = ({ open, handleClose }) => {
-  const user = useAppSelector((state) => state.auth);
+  const user = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
   const handleLogout = () => {

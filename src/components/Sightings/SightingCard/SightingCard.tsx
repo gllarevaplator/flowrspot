@@ -13,7 +13,7 @@ const SightingCard: React.FC<Sightings> = ({
   description,
   flower,
 }) => {
-  const user = useAppSelector((state) => state.auth);
+  const user = useAppSelector((state) => state.user);
 
   return (
     <div className="sighting__card">
