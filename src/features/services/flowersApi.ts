@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Flowers } from "../../models/flowers";
-import { baseUrl } from "../../services/apiService";
+import Flower from "../../models/flowers";
+import baseUrl from "./baseUrl";
 
 interface FlowersApiResponse {
-    flowers: Flowers[], 
+    flowers: Flower[], 
     meta: {
         pagination: {
             current_page: number,
@@ -16,12 +16,14 @@ interface FlowersApiResponse {
 
 export const flowersApi = createApi({
     reducerPath: 'flowersApi',
+    tagTypes: ['Flowers'],
     baseQuery: fetchBaseQuery({baseUrl}),
     endpoints: (builder => ({
-        getSearchedFlowers: builder.query<FlowersApiResponse, string>({
+        getFlowers: builder.query<FlowersApiResponse, string>({
             query: (searchQuery: string) => `/flowers/search?query=${searchQuery}`,
+            providesTags: [{ type: 'Flowers', id: 'LIST'}]
         })
     }))
 });
 
-export const { useGetSearchedFlowersQuery } = flowersApi;
+export const { useGetFlowersQuery } = flowersApi;

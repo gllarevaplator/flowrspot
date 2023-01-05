@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useAppDispatch } from "../../features/app/store";
-import { useSetUserCredentialsMutation } from "../../features/services/userApi";
-// import { userInfo } from "../../features/user/userSlice";
+import { useSetUserLoginCredentialsMutation } from "../../features/services/userApi";
+import { useLazyGetUserInfoQuery } from "../../features/services/userApi";
 import { useFormik } from "formik";
 import { modalStyle } from "./modalStyles/modalStyle";
 import Box from "@mui/material/Box";
@@ -13,7 +13,6 @@ import swal from "sweetalert";
 import "./modalStyles/modalStyle.css";
 import * as Yup from "yup";
 import jwt_decode from "jwt-decode";
-import { useLazyGetUserInfoQuery } from "../../features/services/userApi";
 
 interface FormProps {
   email: string;
@@ -26,16 +25,9 @@ const LoginModal: React.FC<ModalProps> = ({
   handleOpenProfileModal,
 }) => {
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [userLogin, isError] = useSetUserCredentialsMutation();
-  const [trigger, { data, isSuccess: userSuccess, isError: userInfoError }] =
-    useLazyGetUserInfoQuery();
-  const dispatch = useAppDispatch();
-
-  // useEffect(() => {
-  //   if (userSuccess) {
-  //     dispatch(userInfo(data?.user));
-  //   }
-  // }, [userSuccess]);
+  const [setUserLoginCredentials, isError] =
+    useSetUserLoginCredentialsMutation();
+  const [trigger, { isLoading }] = useLazyGetUserInfoQuery();
 
   const {
     values,
@@ -57,8 +49,11 @@ const LoginModal: React.FC<ModalProps> = ({
         .max(25, "Password must be shorter!!")
         .required("Password is Required"),
     }),
-    onSubmit: () => {
-      userLogin({ email: values.email, password: values.password })
+    onSubmit: (): void => {
+      setUserLoginCredentials({
+        email: values.email,
+        password: values.password,
+      })
         .unwrap()
         .then((data): void => {
           setErrorMessage("");
@@ -79,7 +74,7 @@ const LoginModal: React.FC<ModalProps> = ({
           }).then((response): void => {
             if (response === true) {
               handleClose();
-              handleOpenProfileModal();
+              handleOpenProfileModal?.();
             } else {
               handleClose();
             }
@@ -154,6 +149,7 @@ const LoginModal: React.FC<ModalProps> = ({
             <button
               type="submit"
               className="btn submit__button primary__button mt-4 p-3"
+              disabled={isLoading}
             >
               Login to your Account
             </button>

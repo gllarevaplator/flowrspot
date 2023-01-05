@@ -1,32 +1,25 @@
 import React, { useState, useEffect, useCallback } from "react";
 import SightingCard from "../SightingCard/SightingCard";
 import CreateSightingModal from "../../Modals/CreateSightingModal";
-import { Sightings, sightingsList } from "../../../models/sightings";
-import { getSightings } from "../../../services/getSightings";
+import { Sightings } from "../../../models/sightings";
+import { useGetSightingsQuery } from "../../../features/services/sightingsApi";
 import "./latestSightings.css";
 
 const LatestSightings: React.FC = () => {
-  const [sightings, setSightings] = useState<sightingsList>([]);
-  const [loading, setLoading] = useState<boolean>(true);
   const [openCreateSightingModal, setOpenCreateSightingModal] =
     useState<boolean>(false);
   const handleOpenCreateSightingModal = () => setOpenCreateSightingModal(true);
   const handleCloseCreateSightingModal = () =>
     setOpenCreateSightingModal(false);
+  const { data, isSuccess, isLoading, isError } =
+    useGetSightingsQuery("/sightings");
 
-  const newSightingCallback = useCallback(
-    (createdNewSighting: sightingsList) => setSightings(createdNewSighting),
-    []
-  );
+  // const newSightingCallback = useCallback(
+  // (createdNewSighting: sightingsList) => setSightings(createdNewSighting),
+  // []
+  // );
 
-  const loadingCallback = useCallback((bool: boolean) => setLoading(bool), []);
-
-  useEffect(() => {
-    getSightings()
-      .then((sightings: sightingsList) => setSightings(sightings))
-      .then(() => setLoading(false))
-      .catch((err) => console.log(err));
-  }, []);
+  // const loadingCallback = useCallback((bool: boolean) => setLoading(bool), []);
 
   return (
     <>
@@ -50,30 +43,31 @@ const LatestSightings: React.FC = () => {
           {/* )} */}
         </div>
       </div>
-      {loading && <p className="text-center m-2">Loading...</p>}
-      <div className="m-4 grid__sighting__container mt-4">
-        {sightings.map((sighting: Sightings) => (
-          <SightingCard
-            key={sighting.id}
-            name={sighting.name}
-            picture={sighting.picture}
-            comments_count={sighting.comments_count}
-            likes_count={sighting.likes_count}
-            longitude={sighting.longitude}
-            latitude={sighting.latitude}
-            description={sighting.description}
-            flower={sighting.flower}
-            // user={sighting?.user}
-          />
-        ))}
-      </div>
+      {isLoading && <p className="text-center m-2">Loading...</p>}
+      {isSuccess && (
+        <div className="m-4 grid__sighting__container mt-4">
+          {data.sightings.map((sighting: Sightings) => (
+            <SightingCard
+              key={sighting.id}
+              name={sighting.name}
+              picture={sighting.picture}
+              comments_count={sighting.comments_count}
+              likes_count={sighting.likes_count}
+              longitude={sighting.longitude}
+              latitude={sighting.latitude}
+              description={sighting.description}
+              flower={sighting.flower}
+            />
+          ))}
+        </div>
+      )}
       <CreateSightingModal
         open={openCreateSightingModal}
         handleOpen={handleOpenCreateSightingModal}
         handleClose={handleCloseCreateSightingModal}
-        sightings={sightings}
-        newSightingCallback={newSightingCallback}
-        loadingCallback={loadingCallback}
+        // sightings={sightings}
+        // newSightingCallback={newSightingCallback}
+        // loadingCallback={loadingCallback}
       />
     </>
   );

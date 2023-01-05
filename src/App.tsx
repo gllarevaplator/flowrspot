@@ -9,7 +9,7 @@ import jwt_decode from "jwt-decode";
 import "./App.css";
 
 const App: React.FC = () => {
-  const token = localStorage.getItem("user-token");
+  const token: string | null = localStorage.getItem("user-token");
   const [trigger] = useLazyGetUserInfoQuery();
 
   useEffect(() => {

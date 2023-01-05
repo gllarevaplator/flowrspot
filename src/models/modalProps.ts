@@ -1,5 +1,4 @@
-import { Sightings, sightingsList } from "./sightings";
-import User from "./user";
+import { Sightings } from "./sightings";
 
 export default interface ModalProps {
   open: boolean;
@@ -9,12 +8,7 @@ export default interface ModalProps {
   handleCloseLoginModal?: () => void;
   handleOpenSignUpModal?: () => void;
   handleCloseSignUpModal?: () => void;
-  handleOpenProfileModal?: any;
+  handleOpenProfileModal?: () => (void | (() => void | undefined));
   handleCloseProfileModal?: () => void;
-  user?: User | null;
-  userFromLogin?: any;
-  userInfoCallback?: any;
-  newSightingCallback?: any;
-  sightings?: any;
-  loadingCallback?: any;
+  sightings?: Sightings[];
 }

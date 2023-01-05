@@ -1,21 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Sightings } from "../../../models/sightings";
 import like from "../../../icons/like.svg";
 import comment from "../../../icons/comment.svg";
 import location from "../../../icons/location.svg";
 import "./sightingCard.css";
+import { useAppSelector } from "../../../features/app/store";
 
 const SightingCard: React.FC<Sightings> = ({
-  name,
   picture,
   likes_count,
   comments_count,
-  longitude,
-  latitude,
   description,
   flower,
-  // user,
 }) => {
+  const user = useAppSelector((state) => state.auth);
+
   return (
     <div className="sighting__card">
       <div className="sighting__location">
@@ -39,7 +38,11 @@ const SightingCard: React.FC<Sightings> = ({
           </div>
           <div className="sighting__profile__info">
             <h4>{flower?.name}</h4>
-            {/* <h5>by {user?.full_name}</h5> */}
+            {user.id && (
+              <h5>
+                by {user?.first_name} {user?.last_name}
+              </h5>
+            )}
           </div>
         </div>
         <div>

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import ModalProps from "../../models/modalProps";
-import { post } from "../../services/apiService";
-import { Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 import "./modalStyles/modalStyle.css";
 import { modalStyle } from "./modalStyles/modalStyle";
@@ -15,6 +14,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useSetUserRegisterCredentialsMutation } from "../../features/services/userApi";
 
 interface FormProps {
   first_name: string;
@@ -30,8 +30,9 @@ const SignUpModal: React.FC<ModalProps> = ({
   handleOpenLoginModal,
 }) => {
   const [selectedDate, setSelectedDate] = useState<Date | string>(new Date());
-  const [error, setError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [setUserRegisterCredentials, isError] =
+    useSetUserRegisterCredentialsMutation();
 
   const {
     values,
@@ -64,16 +65,14 @@ const SignUpModal: React.FC<ModalProps> = ({
         .max(25, "Password must be shorter!!")
         .required("Password is Required"),
     }),
-    onSubmit: () => {
-      post("/users/register", values)
-        .then((e) => {
-          handleClose();
-          handleReset(e);
-          setError(false);
+    onSubmit: (): void => {
+      setUserRegisterCredentials(values)
+        .unwrap()
+        .then((): void => {
           setErrorMessage("");
           swal({
             title:
-              "Congratulations! You have successfully signed up for FlowrSpot!",
+              "Congratulations! You have succesfully signed up for FlowrSpot!",
             icon: "success",
             buttons: {
               confirm: {
@@ -81,12 +80,16 @@ const SignUpModal: React.FC<ModalProps> = ({
                 className: "primary__button text-center",
               },
             },
-          }).then(handleOpenLoginModal);
+          })
+            .then((e): void => {
+              handleReset(e);
+              handleClose();
+            })
+            .then(handleOpenLoginModal);
         })
-        .catch(({ response }) => {
-          setError(true);
-          setErrorMessage(response.data.error);
-        });
+        .catch(({ data: signUpError }: { data: { error: string } }) =>
+          setErrorMessage(signUpError.error)
+        );
     },
   });
 
@@ -188,7 +191,7 @@ const SignUpModal: React.FC<ModalProps> = ({
               onChange={handleChange}
               errors={errors.password}
             />
-            {error && <span className="text-danger">{errorMessage}</span>}
+            {isError && <span className="text-danger">{errorMessage}</span>}
             <button
               type="submit"
               className="btn submit__button primary__button mt-4 p-3"

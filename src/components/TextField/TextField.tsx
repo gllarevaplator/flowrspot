@@ -4,6 +4,7 @@ import TextFieldProps from "../../models/textField";
 
 const TextFieldInput: React.FC<TextFieldProps> = ({
   id,
+  required,
   label,
   name,
   type,
@@ -20,6 +21,7 @@ const TextFieldInput: React.FC<TextFieldProps> = ({
       {errors && touched && <span className="text-danger">{errors}</span>}
       <TextField
         id={id}
+        required={required}
         label={label}
         name={name}
         type={type}

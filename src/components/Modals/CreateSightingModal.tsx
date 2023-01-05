@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ModalProps from "../../models/modalProps";
-import { post } from "../../services/apiService";
 import { useFormik } from "formik";
 import { modalStyle } from "./modalStyles/modalStyle";
 import "./modalStyles/modalStyle.css";
@@ -9,19 +8,31 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextFieldInput from "../TextField/TextField";
+import { useCreateSightingMutation } from "../../features/services/sightingsApi";
+
+interface FormProps {
+  flower_id: string;
+  name: string;
+  description: string;
+  latitude: string;
+  longitude: string;
+  picture: string;
+  city: string;
+}
 
 const CreateSightingModal: React.FC<ModalProps> = ({
   open,
-  handleOpen,
+  // handleOpen,
   handleClose,
-  sightings,
-  newSightingCallback,
-  loadingCallback,
+  // sightings,
+  // newSightingCallback,
+  // loadingCallback,
 }) => {
-  const [picture, setPicture] = useState<any>(null);
+  const [picture, setPicture] = useState<string | Blob>("");
   const [profilePictureError, setProfilePictureError] = useState<string>("");
-  const [error, setError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [createSighting, { data, isSuccess, isLoading, isError }] =
+    useCreateSightingMutation();
 
   const {
     values,
@@ -31,7 +42,7 @@ const CreateSightingModal: React.FC<ModalProps> = ({
     handleBlur,
     handleReset,
     touched,
-  } = useFormik({
+  } = useFormik<FormProps>({
     initialValues: {
       flower_id: "",
       name: "",
@@ -60,41 +71,52 @@ const CreateSightingModal: React.FC<ModalProps> = ({
         .max(1000000000, "Latitude must be longer!")
         .required("Longitude is Required"),
     }),
-    onSubmit: () => {
+    onSubmit: (): void => {
       const data = new FormData();
-      data.append("picture", picture);
       data.append("flower_id", values.flower_id);
       data.append("name", values.name);
       data.append("description", values.description);
       data.append("latitude", values.latitude);
       data.append("longitude", values.longitude);
-      const token: any = localStorage.getItem("token");
-      loadingCallback(true);
-      post("/sightings", data, {
-        headers: {
-          Authorization: token,
-          "Content-Type": `multipart/form-data`,
-        },
-      })
-        .then(({ data }) => {
-          newSightingCallback([data.sighting, ...sightings]);
+      data.append("picture", picture);
+      createSighting(data)
+        .unwrap()
+        .then((e): void => {
           handleClose();
-          loadingCallback(false);
-        })
-        .then((e) => {
           handleReset(e);
         })
-        .catch((err) => {
-          loadingCallback(false);
-          setError(true);
-          console.log(err.response);
+        .catch(({ data: createSightingError }: { data: { error: string } }) => {
+          setErrorMessage(createSightingError.error);
         });
+      // const token: any = localStorage.getItem("user-token");
+      // loadingCallback(true);
+      // post("/sightings", data, {
+      //   headers: {
+      //     Authorization:
+      //       "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo3MTQxLCJleHAiOjE2NzI1MTczMDV9.hU6hM9d5cD7t0Zg1deJURRUPJJoHcypTeWabP5hLGck",
+      //     "Content-Type": `multipart/form-data`,
+      //   },
+      // })
+      //   .then(({ data }) => {
+      //     newSightingCallback([data.sighting, ...sightings]);
+      //     handleClose();
+      //     loadingCallback(false);
+      //   })
+      //   .then((e) => {
+      //     handleReset(e);
+      //   })
+      //   .catch((err) => {
+      //     loadingCallback(false);
+      //     setError(true);
+      //     console.log(err.response);
+      //   });
     },
   });
 
   const handleImageUpload = (e: any) => {
-    const image = e.currentTarget.files[0];
-    setPicture(image);
+    const { files } = e.target;
+    const selectedFiles = files as FileList;
+    setPicture(selectedFiles?.[0]);
   };
 
   return (
@@ -121,13 +143,13 @@ const CreateSightingModal: React.FC<ModalProps> = ({
               onClick={(e) => {
                 handleClose();
                 handleReset(e);
-                setError(false);
                 setErrorMessage("");
               }}
             ></button>
           </div>
           <form onSubmit={handleSubmit}>
             <TextFieldInput
+              required
               id="Flower Id"
               label="Flower Id"
               name="flower_id"
@@ -141,6 +163,7 @@ const CreateSightingModal: React.FC<ModalProps> = ({
               errors={errors.flower_id}
             />
             <TextFieldInput
+              required
               id="Name"
               label="Name"
               name="name"
@@ -154,6 +177,7 @@ const CreateSightingModal: React.FC<ModalProps> = ({
               errors={errors.name}
             />
             <TextFieldInput
+              required
               id="Description"
               label="Description"
               name="description"
@@ -167,6 +191,7 @@ const CreateSightingModal: React.FC<ModalProps> = ({
               errors={errors.description}
             />
             <TextFieldInput
+              required
               id="Latitude"
               label="Latitude"
               name="latitude"
@@ -180,6 +205,7 @@ const CreateSightingModal: React.FC<ModalProps> = ({
               errors={errors.latitude}
             />
             <TextFieldInput
+              required
               id="Longitude"
               label="Longitude"
               name="longitude"
@@ -193,8 +219,9 @@ const CreateSightingModal: React.FC<ModalProps> = ({
               errors={errors.longitude}
             />
             <TextFieldInput
+              required
               id="Picture"
-              label=""
+              label="Picture"
               name="picture"
               type="file"
               sx={{ mb: 2, width: "100%" }}
@@ -204,7 +231,7 @@ const CreateSightingModal: React.FC<ModalProps> = ({
               onChange={handleImageUpload}
               errors={profilePictureError}
             />
-            {error && <span className="text-danger">{errorMessage}</span>}
+            {isError && <span className="text-danger">{errorMessage}</span>}
             <button
               type="submit"
               className="btn submit__button primary__button mt-4 p-3"

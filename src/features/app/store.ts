@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { userApi } from "../services/userApi";
 import { flowersApi } from "../services/flowersApi";
+import { sightingsApi } from "../services/sightingsApi";
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 import authReducer from "../user/userSlice";
@@ -10,9 +11,10 @@ const store = configureStore({
         auth: authReducer,
         [userApi.reducerPath]: userApi.reducer,
         [flowersApi.reducerPath]: flowersApi.reducer,
+        [sightingsApi.reducerPath]: sightingsApi.reducer,
     }, 
     middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(flowersApi.middleware, userApi.middleware),
+    getDefaultMiddleware().concat(userApi.middleware, flowersApi.middleware, sightingsApi.middleware),
 });
 
 setupListeners(store.dispatch)

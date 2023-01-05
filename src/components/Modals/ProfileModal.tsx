@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./modalStyles/modalStyle.css";
 import Modal from "@mui/material/Modal";
 import ModalProps from "../../models/modalProps";

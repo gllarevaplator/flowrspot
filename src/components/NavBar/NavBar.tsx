@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import { useAppSelector } from "../../features/app/store";
 import { Link } from "react-router-dom";
 import SignUpModal from "../Modals/SignUpModal";
@@ -18,13 +18,8 @@ const NavBar: React.FC = () => {
   const [openProfileModal, setOpenProfileModal] = useState<boolean>(false);
   const handleOpenProfileModal = () => setOpenProfileModal(true);
   const handleCloseProfileModal = () => setOpenProfileModal(false);
-  const [profileModalUserInfo, setProfileModalUserInfo] = useState<any>(null);
   const user = useAppSelector((state) => state.auth);
   const { first_name } = user;
-
-  const userCallback = useCallback((userInfo: any) => {
-    setProfileModalUserInfo(userInfo);
-  }, []);
 
   return (
     <div className="header">
@@ -70,7 +65,7 @@ const NavBar: React.FC = () => {
                     className="nav-link avatar__navbar"
                     onClick={handleOpenProfileModal}
                   >
-                    <Avatar className="avatar__navbar">PG</Avatar>
+                    <Avatar className="avatar__navbar">{first_name}</Avatar>
                   </a>
                 </li>
               </>
@@ -108,13 +103,11 @@ const NavBar: React.FC = () => {
             handleOpen={handleOpenLoginModal}
             handleClose={handleCloseLoginModal}
             handleOpenProfileModal={handleOpenProfileModal}
-            userInfoCallback={userCallback}
           />
           <ProfileModal
             open={openProfileModal}
             handleOpen={handleOpenProfileModal}
             handleClose={handleCloseProfileModal}
-            userFromLogin={profileModalUserInfo}
           />
         </div>
       </nav>

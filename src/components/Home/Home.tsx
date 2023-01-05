@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import DiscoverFlowers from "../Flowers/DiscoverFlowers/DiscoverFlowers";
 import FlowerCard from "../Flowers/FlowerCard/FlowerCard";
-import { Flowers } from "../../models/flowers";
-import { useGetSearchedFlowersQuery } from "../../features/services/flowersApi";
+import Flower from "../../models/flowers";
+import { useGetFlowersQuery } from "../../features/services/flowersApi";
+import { useAppSelector } from "../../features/app/store";
 import "./home.css";
 
 const Home: React.FC = () => {
+  const user = useAppSelector((state) => state.auth);
   const [search, setSearch] = useState<string>("");
-  const { data, isError, isLoading, isSuccess } =
-    useGetSearchedFlowersQuery(search);
+  const { data, isLoading, isSuccess } = useGetFlowersQuery(search);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
@@ -24,7 +25,7 @@ const Home: React.FC = () => {
       {isSuccess && (
         <>
           <div className="m-4 grid-container mt-4">
-            {data.flowers.map((flower: Flowers) => (
+            {data.flowers.map((flower: Flower) => (
               <FlowerCard
                 id={flower.id}
                 key={flower.id}
@@ -33,6 +34,7 @@ const Home: React.FC = () => {
                 sightings={flower.sightings}
                 profile_picture={flower.profile_picture}
                 favorite={flower.favorite}
+                user={user}
               />
             ))}
           </div>

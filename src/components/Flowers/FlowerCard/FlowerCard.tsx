@@ -1,10 +1,10 @@
 import React from "react";
-import { Flowers } from "../../../models/flowers";
+import Flower from "../../../models/flowers";
 import favoriteIcon from "../../../icons/star-filled.svg";
 import nonFavoriteIcon from "../../../icons/star-outlined.svg";
 import "./flowerCard.css";
 
-const FlowerCard: React.FC<Flowers> = ({
+const FlowerCard: React.FC<Flower> = ({
   latin_name,
   name,
   sightings,
@@ -16,7 +16,7 @@ const FlowerCard: React.FC<Flowers> = ({
 
   return (
     <div className="card" data-testid="flower">
-      {user && (
+      {user.id && (
         <>
           <div className="favorite__flower">
             <img src={favoriteFlower} />

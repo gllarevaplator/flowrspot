@@ -1,4 +1,4 @@
-import { Flowers } from "./flowers";
+import Flower from "./flowers";
 import User from "./user";
 
 export interface Sightings{
@@ -12,7 +12,5 @@ export interface Sightings{
     latitude: number;
     created_at?: Date | string;
     user?: User | null;
-    flower?: Flowers;
+    flower?: Flower;
 }
-
-export type sightingsList = Sightings[];

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { userApi } from "../services/userApi";
 
-export interface User {
+export interface UserProps {
     user: {
         id: number, 
         first_name: string,
@@ -9,7 +9,7 @@ export interface User {
     }
 }
 
-interface UserState {
+export interface UserState {
     id: number | null,
     first_name: string | null,
     last_name: string| null,
@@ -34,7 +34,7 @@ export const userSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addMatcher(
-          userApi.endpoints.setUserCredentials.matchFulfilled,
+          (userApi.endpoints.setUserLoginCredentials.matchFulfilled || userApi.endpoints.setUserRegisterCredentials.matchFulfilled),
           (state, action: PayloadAction<{auth_token: string}>) => {
             state.token = action.payload.auth_token;
             localStorage.setItem('user-token', action.payload.auth_token)
@@ -42,7 +42,7 @@ export const userSlice = createSlice({
         );  
         builder.addMatcher(
             userApi.endpoints.getUserInfo.matchFulfilled,
-            (state, action: PayloadAction<User>) => {
+            (state, action: PayloadAction<UserProps>) => {
                 state.id = action.payload.user.id;
                 state.first_name = action.payload.user.first_name;
                 state.last_name = action.payload.user.last_name;
@@ -54,4 +54,4 @@ export const userSlice = createSlice({
 
 export default userSlice.reducer;
 
-export const {logout} = userSlice.actions;
+export const { logout } = userSlice.actions;
