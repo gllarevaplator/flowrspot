@@ -11,6 +11,6 @@ export interface Sightings{
     longitude: number;
     latitude: number;
     created_at?: Date | string;
-    user?: User | null;
+    user?: User;
     flower?: Flower;
 }
