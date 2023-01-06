@@ -19,14 +19,16 @@ const PaginationForm: React.FC<PaginationProps> = ({
   return (
     <>
       <div className="pagination mb-2">
-        <Stack spacing={2}>
-          <Pagination
-            defaultPage={defaultPage}
-            count={count}
-            page={page}
-            onChange={onChange}
-          />
-        </Stack>
+        <div className="bg-light border p-2 rounded">
+          <Stack spacing={2}>
+            <Pagination
+              defaultPage={defaultPage}
+              count={count}
+              page={page}
+              onChange={onChange}
+            />
+          </Stack>
+        </div>
       </div>
     </>
   );
