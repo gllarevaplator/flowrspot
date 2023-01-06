@@ -11,7 +11,7 @@ const Home: React.FC = () => {
   const user = useAppSelector((state) => state.user);
   const [search, setSearch] = useState<string>("");
   const [page, setPage] = useState<number>(1);
-  const { data, isLoading, isSuccess } = useGetFlowersQuery(page);
+  const { data, isLoading, isSuccess, isError } = useGetFlowersQuery(page);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
@@ -39,6 +39,7 @@ const Home: React.FC = () => {
         <p className="text-center m-4">No Flower Found...</p>
       )}
       {isLoading && <p className="text-center m-4">Loading...</p>}
+      {isError && <p className="text-center m-2">Something went wrong...</p>}
       {isSuccess && (
         <>
           <div className="m-4 grid-container mt-4">
