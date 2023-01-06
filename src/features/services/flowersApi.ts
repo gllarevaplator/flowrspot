@@ -25,6 +25,7 @@ export const flowersApi = createApi({
     }),
     getSearchedFlowers: builder.query<FlowersApiResponse, string>({
       query: (searchQuery: string) => `/flowers/search?query=${searchQuery}`,
+      providesTags: [{ type: "Flowers", id: "LIST" }],
     }),
   }),
 });
