@@ -39,7 +39,7 @@ const SightingCard: React.FC<Sightings> = ({
           <div className="sighting__profile__info">
             <h4>{flower?.name}</h4>
             {user.id && (
-              <h5>
+              <h5 className="sighting__author">
                 by {user?.first_name} {user?.last_name}
               </h5>
             )}
