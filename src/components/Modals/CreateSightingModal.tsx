@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextFieldInput from "../TextField/TextField";
 import { useCreateSightingMutation } from "../../features/services/sightingsApi";
+import mime from "mime";
 
 interface FormProps {
   flower_id: string;
@@ -31,8 +32,7 @@ const CreateSightingModal: React.FC<ModalProps> = ({
   const [picture, setPicture] = useState<string | Blob>("");
   const [profilePictureError, setProfilePictureError] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [createSighting, { data, isSuccess, isLoading, isError }] =
-    useCreateSightingMutation();
+  const [createSighting, { isLoading, isError }] = useCreateSightingMutation();
 
   const {
     values,
@@ -79,12 +79,9 @@ const CreateSightingModal: React.FC<ModalProps> = ({
       data.append("latitude", values.latitude);
       data.append("longitude", values.longitude);
       data.append("picture", picture);
-      const formData = {
-        flower_id: values.flower_id,
-      };
+
       createSighting(data)
         .unwrap()
-        .then((data) => console.log(data))
         .then((e): void => {
           handleClose();
           handleReset(e);
@@ -98,28 +95,6 @@ const CreateSightingModal: React.FC<ModalProps> = ({
             if (createSightingError) setErrorMessage(createSightingError.error);
           }
         );
-      // const token: any = localStorage.getItem("user-token");
-      // loadingCallback(true);
-      // post("/sightings", data, {
-      //   headers: {
-      //     Authorization:
-      //       "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo3MTQxLCJleHAiOjE2NzI1MTczMDV9.hU6hM9d5cD7t0Zg1deJURRUPJJoHcypTeWabP5hLGck",
-      //     "Content-Type": `multipart/form-data`,
-      //   },
-      // })
-      //   .then(({ data }) => {
-      //     newSightingCallback([data.sighting, ...sightings]);
-      //     handleClose();
-      //     loadingCallback(false);
-      //   })
-      //   .then((e) => {
-      //     handleReset(e);
-      //   })
-      //   .catch((err) => {
-      //     loadingCallback(false);
-      //     setError(true);
-      //     console.log(err.response);
-      //   });
     },
   });
 
@@ -245,6 +220,7 @@ const CreateSightingModal: React.FC<ModalProps> = ({
             <button
               type="submit"
               className="btn submit__button primary__button mt-4 p-3"
+              disabled={isLoading}
             >
               Create
             </button>

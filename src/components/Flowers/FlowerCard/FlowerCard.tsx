@@ -32,7 +32,11 @@ const FlowerCard: React.FC<Flower> = ({
         </div>
       </div>
       <div className="card__button text-center">
-        <span>{sightings} Sightings</span>
+        <span>
+          {sightings === 1
+            ? `${sightings}  Sighting`
+            : `${sightings}  Sightings`}
+        </span>
       </div>
     </div>
   );

@@ -1,11 +1,13 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
 import SightingCard from "../SightingCard/SightingCard";
 import CreateSightingModal from "../../Modals/CreateSightingModal";
 import { Sightings } from "../../../models/sightings";
 import { useGetSightingsQuery } from "../../../features/services/sightingsApi";
+import { useAppSelector } from "../../../features/app/store";
 import "./latestSightings.css";
 
 const LatestSightings: React.FC = () => {
+  const user = useAppSelector((state) => state.user);
   const [openCreateSightingModal, setOpenCreateSightingModal] =
     useState<boolean>(false);
   const handleOpenCreateSightingModal = () => setOpenCreateSightingModal(true);
@@ -31,16 +33,16 @@ const LatestSightings: React.FC = () => {
               Explore between more than 8.427 sightings
             </p>
           </div>
-          {/* {user && ( */}
-          <div className="col-md-6 add__sightings__container">
-            <button
-              className="primary__button px-5 py-3 add__sightings__button"
-              onClick={handleOpenCreateSightingModal}
-            >
-              + Add Sighting
-            </button>
-          </div>
-          {/* )} */}
+          {user.id && (
+            <div className="col-md-6 add__sightings__container">
+              <button
+                className="primary__button px-5 py-3 add__sightings__button"
+                onClick={handleOpenCreateSightingModal}
+              >
+                + Add Sighting
+              </button>
+            </div>
+          )}
         </div>
       </div>
       {isLoading && <p className="text-center m-2">Loading...</p>}

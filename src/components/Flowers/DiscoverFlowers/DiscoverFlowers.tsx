@@ -5,11 +5,13 @@ import searchIcon from "../../../icons/search.svg";
 interface DiscoverFlowersProps {
   search: string;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSubmit: (event: React.FormEvent<HTMLButtonElement>) => void;
 }
 
 const DiscoverFlowers: React.FC<DiscoverFlowersProps> = ({
   search,
   handleChange,
+  handleSubmit,
 }) => {
   return (
     <div className="discover__container">
@@ -28,7 +30,11 @@ const DiscoverFlowers: React.FC<DiscoverFlowersProps> = ({
               placeholder="Looking for something specific?"
             />
             <div className="search__container">
-              <button type="submit" className="search__button">
+              <button
+                type="submit"
+                className="search__button"
+                onClick={handleSubmit}
+              >
                 <img
                   src={searchIcon}
                   alt="Search Icon"

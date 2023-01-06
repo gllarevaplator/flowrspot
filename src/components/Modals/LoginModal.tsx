@@ -84,7 +84,7 @@ const LoginModal: React.FC<ModalProps> = ({
           handleReset(e);
           handleClose();
         })
-        .catch(({ data: loginError }: { data: { error: string } }) => {
+        .catch(({ data: loginError }: { data: { error: string } }): void => {
           setErrorMessage(loginError.error);
         });
     },
@@ -120,6 +120,7 @@ const LoginModal: React.FC<ModalProps> = ({
           </div>
           <form onSubmit={handleSubmit}>
             <TextFieldInput
+              required
               id="Email"
               label="Email"
               name="email"
@@ -133,6 +134,7 @@ const LoginModal: React.FC<ModalProps> = ({
               errors={errors.email}
             />
             <TextFieldInput
+              required
               id="Password"
               label="Password"
               name="password"

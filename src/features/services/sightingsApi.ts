@@ -24,7 +24,6 @@ export const sightingsApi = createApi({
       const token = (getState() as RootState).user.token;
       if (token) {
         headers.set("Authorization", token);
-        headers.set("Content-Type", "multipart/form-data");
       }
       return headers;
     },
@@ -34,15 +33,8 @@ export const sightingsApi = createApi({
       query: (endpoint: string) => `${endpoint}`,
       providesTags: [{ type: "Sightings", id: "LIST" }],
     }),
-    createSighting: builder.mutation({
-      query(body: {
-        flower_id: number;
-        name: string;
-        description: string;
-        latitude: number;
-        longitude: number;
-        picture: File;
-      }) {
+    createSighting: builder.mutation<Sightings[], FormData>({
+      query(body: FormData) {
         return {
           url: "/sightings",
           method: "POST",
@@ -55,4 +47,3 @@ export const sightingsApi = createApi({
 });
 
 export const { useGetSightingsQuery, useCreateSightingMutation } = sightingsApi;
-// https://flowrspot-api.herokuapp.com/api/v1/sightings

@@ -15,9 +15,17 @@ const Home: React.FC = () => {
     setSearch(event.target.value);
   };
 
+  const handleSubmit = (event: React.FormEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
+
   return (
     <>
-      <DiscoverFlowers search={search} handleChange={handleChange} />
+      <DiscoverFlowers
+        search={search}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+      />
       {data?.flowers.length === 0 && (
         <p className="text-center m-4">No Flower Found...</p>
       )}

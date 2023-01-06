@@ -31,7 +31,7 @@ const SignUpModal: React.FC<ModalProps> = ({
 }) => {
   const [selectedDate, setSelectedDate] = useState<Date | string>(new Date());
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [setUserRegisterCredentials, isError] =
+  const [setUserRegisterCredentials, { isError, isLoading }] =
     useSetUserRegisterCredentialsMutation();
 
   const {
@@ -87,7 +87,7 @@ const SignUpModal: React.FC<ModalProps> = ({
             })
             .then(handleOpenLoginModal);
         })
-        .catch(({ data: signUpError }: { data: { error: string } }) =>
+        .catch(({ data: signUpError }: { data: { error: string } }): void =>
           setErrorMessage(signUpError.error)
         );
     },
@@ -122,6 +122,7 @@ const SignUpModal: React.FC<ModalProps> = ({
           </div>
           <form onSubmit={handleSubmit}>
             <TextFieldInput
+              required
               id="First Name"
               label="First Name"
               name="first_name"
@@ -135,6 +136,7 @@ const SignUpModal: React.FC<ModalProps> = ({
               errors={errors.first_name}
             />
             <TextFieldInput
+              required
               id="Last Name"
               label="Last Name"
               name="last_name"
@@ -166,6 +168,7 @@ const SignUpModal: React.FC<ModalProps> = ({
               />
             </LocalizationProvider>
             <TextFieldInput
+              required
               id="Email"
               label="Email"
               name="email"
@@ -179,6 +182,7 @@ const SignUpModal: React.FC<ModalProps> = ({
               errors={errors.email}
             />
             <TextFieldInput
+              required
               id="Password"
               label="Password"
               name="password"
@@ -195,6 +199,7 @@ const SignUpModal: React.FC<ModalProps> = ({
             <button
               type="submit"
               className="btn submit__button primary__button mt-4 p-3"
+              disabled={isLoading}
             >
               Create Account
             </button>
