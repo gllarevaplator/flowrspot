@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import DiscoverFlowers from "../Flowers/DiscoverFlowers/DiscoverFlowers";
 import FlowerCard from "../Flowers/FlowerCard/FlowerCard";
 import Flower from "../../models/flowers";
 import { useGetFlowersQuery } from "../../features/services/flowersApi";
 import { useAppSelector } from "../../features/app/store";
+import PaginationForm from "../Pagination/Pagination";
 import "./home.css";
 
 const Home: React.FC = () => {
   const user = useAppSelector((state) => state.user);
   const [search, setSearch] = useState<string>("");
-  const { data, isLoading, isSuccess } = useGetFlowersQuery(search);
+  const [page, setPage] = useState<number>(1);
+  const { data, isLoading, isSuccess } = useGetFlowersQuery(page);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
@@ -18,6 +20,13 @@ const Home: React.FC = () => {
   const handleSubmit = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
+
+  const handlePageChange = useCallback(
+    (event: React.ChangeEvent<unknown>, value: number): void => {
+      setPage(value);
+    },
+    [page]
+  );
 
   return (
     <>
@@ -46,6 +55,16 @@ const Home: React.FC = () => {
               />
             ))}
           </div>
+          {isSuccess && (
+            <div className="pagination mb-2">
+              <PaginationForm
+                defaultPage={1}
+                count={data.meta.pagination.total_pages}
+                page={page}
+                onChange={handlePageChange}
+              />
+            </div>
+          )}
         </>
       )}
     </>

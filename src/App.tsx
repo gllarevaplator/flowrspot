@@ -3,6 +3,7 @@ import NavBar from "./components/NavBar/NavBar";
 import Home from "./components/Home/Home";
 import LatestSightings from "./components/Sightings/LatestSightings/LatestSightings";
 import Favorite from "./components/Favorite/Favorite";
+import Footer from "./components/Footer/Footer";
 import { Routes, Route } from "react-router-dom";
 import { useLazyGetUserInfoQuery } from "./features/services/userApi";
 import jwt_decode from "jwt-decode";
@@ -30,6 +31,7 @@ const App: React.FC = () => {
           <Route path="/latest-sightings" element={<LatestSightings />} />
         </>
       </Routes>
+      <Footer />
     </div>
   );
 };

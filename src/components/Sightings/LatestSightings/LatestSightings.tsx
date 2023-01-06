@@ -1,20 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import SightingCard from "../SightingCard/SightingCard";
 import CreateSightingModal from "../../Modals/CreateSightingModal";
 import { Sightings } from "../../../models/sightings";
 import { useGetSightingsQuery } from "../../../features/services/sightingsApi";
 import { useAppSelector } from "../../../features/app/store";
+import PaginationForm from "../../Pagination/Pagination";
 import "./latestSightings.css";
 
 const LatestSightings: React.FC = () => {
   const user = useAppSelector((state) => state.user);
+  const [page, setPage] = useState<number>(1);
   const [openCreateSightingModal, setOpenCreateSightingModal] =
     useState<boolean>(false);
   const handleOpenCreateSightingModal = () => setOpenCreateSightingModal(true);
   const handleCloseCreateSightingModal = () =>
     setOpenCreateSightingModal(false);
-  const { data, isSuccess, isLoading, isError } =
-    useGetSightingsQuery("/sightings");
+  const { data, isSuccess, isLoading, isError } = useGetSightingsQuery(page);
+
+  const handlePageChange = useCallback(
+    (event: React.ChangeEvent<unknown>, value: number): void => {
+      setPage(value);
+    },
+    [page]
+  );
 
   return (
     <>
@@ -62,6 +70,16 @@ const LatestSightings: React.FC = () => {
         handleOpen={handleOpenCreateSightingModal}
         handleClose={handleCloseCreateSightingModal}
       />
+      {isSuccess && (
+        <div className="pagination mb-2">
+          <PaginationForm
+            defaultPage={1}
+            count={data?.meta.pagination.total_pages}
+            page={page}
+            onChange={handlePageChange}
+          />
+        </div>
+      )}
     </>
   );
 };

@@ -29,8 +29,8 @@ export const sightingsApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getSightings: builder.query<SightingsApiResponse, string>({
-      query: (endpoint: string) => `${endpoint}`,
+    getSightings: builder.query<SightingsApiResponse, number>({
+      query: (pageNumber: number) => `/sightings?page=${pageNumber}`,
       providesTags: [{ type: "Sightings", id: "LIST" }],
     }),
     createSighting: builder.mutation<Sightings[], FormData>({

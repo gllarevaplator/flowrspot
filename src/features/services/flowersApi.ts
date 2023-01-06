@@ -19,11 +19,14 @@ export const flowersApi = createApi({
   tagTypes: ["Flowers"],
   baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: (builder) => ({
-    getFlowers: builder.query<FlowersApiResponse, string>({
-      query: (searchQuery: string) => `/flowers/search?query=${searchQuery}`,
+    getFlowers: builder.query<FlowersApiResponse, number>({
+      query: (pageNumber: number) => `/flowers?page=${pageNumber}`,
       providesTags: [{ type: "Flowers", id: "LIST" }],
+    }),
+    getSearchedFlowers: builder.query<FlowersApiResponse, string>({
+      query: (searchQuery: string) => `/flowers/search?query=${searchQuery}`,
     }),
   }),
 });
 
-export const { useGetFlowersQuery } = flowersApi;
+export const { useGetFlowersQuery, useGetSearchedFlowersQuery } = flowersApi;

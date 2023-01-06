@@ -208,6 +208,11 @@ const CreateSightingModal: React.FC<ModalProps> = ({ open, handleClose }) => {
               onChange={handleImageUpload}
               errors={profilePictureError}
             />
+            {isLoading && (
+              <span className="text-primary">
+                Please wait, Sighting is being created...
+              </span>
+            )}
             {isError && <span className="text-danger">{errorMessage}</span>}
             <button
               type="submit"
