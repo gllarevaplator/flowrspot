@@ -20,7 +20,7 @@ export const sightingsApi = createApi({
   tagTypes: ["Sightings"],
   baseQuery: fetchBaseQuery({
     baseUrl,
-    prepareHeaders: (headers, { getState }) => {
+    prepareHeaders: (headers, { getState }): Headers => {
       const token = (getState() as RootState).user.token;
       if (token) {
         headers.set("Authorization", token);

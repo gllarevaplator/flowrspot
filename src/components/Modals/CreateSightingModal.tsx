@@ -9,7 +9,6 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextFieldInput from "../TextField/TextField";
 import { useCreateSightingMutation } from "../../features/services/sightingsApi";
-import mime from "mime";
 
 interface FormProps {
   flower_id: string;
@@ -23,7 +22,7 @@ interface FormProps {
 
 const CreateSightingModal: React.FC<ModalProps> = ({ open, handleClose }) => {
   const [picture, setPicture] = useState<string | Blob>("");
-  const [profilePictureError, setProfilePictureError] = useState<string>("");
+  const [profilePictureError] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [createSighting, { isLoading, isError }] = useCreateSightingMutation();
 
