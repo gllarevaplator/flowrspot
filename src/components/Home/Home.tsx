@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import DiscoverFlowers from "../Flowers/DiscoverFlowers/DiscoverFlowers";
 import FlowerCard from "../Flowers/FlowerCard/FlowerCard";
 import Flower from "../../models/flowers";
@@ -21,12 +21,12 @@ const Home: React.FC = () => {
     event.preventDefault();
   };
 
-  const handlePageChange = useCallback(
-    (event: React.ChangeEvent<unknown>, value: number): void => {
-      setPage(value);
-    },
-    [page]
-  );
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ): void => {
+    setPage(value);
+  };
 
   return (
     <>

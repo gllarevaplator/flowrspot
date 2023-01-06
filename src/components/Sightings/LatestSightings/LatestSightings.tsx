@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import SightingCard from "../SightingCard/SightingCard";
 import CreateSightingModal from "../../Modals/CreateSightingModal";
 import { Sightings } from "../../../models/sightings";
@@ -17,12 +17,12 @@ const LatestSightings: React.FC = () => {
     setOpenCreateSightingModal(false);
   const { data, isSuccess, isLoading, isError } = useGetSightingsQuery(page);
 
-  const handlePageChange = useCallback(
-    (event: React.ChangeEvent<unknown>, value: number): void => {
-      setPage(value);
-    },
-    [page]
-  );
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ): void => {
+    setPage(value);
+  };
 
   return (
     <>
