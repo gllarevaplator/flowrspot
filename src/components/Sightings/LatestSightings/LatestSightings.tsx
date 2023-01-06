@@ -71,14 +71,12 @@ const LatestSightings: React.FC = () => {
         handleClose={handleCloseCreateSightingModal}
       />
       {isSuccess && (
-        <div className="pagination mb-2">
-          <PaginationForm
-            defaultPage={1}
-            count={data?.meta.pagination.total_pages}
-            page={page}
-            onChange={handlePageChange}
-          />
-        </div>
+        <PaginationForm
+          defaultPage={1}
+          count={data?.meta.pagination.total_pages}
+          page={page}
+          onChange={handlePageChange}
+        />
       )}
     </>
   );
