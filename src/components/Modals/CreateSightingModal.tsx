@@ -21,14 +21,7 @@ interface FormProps {
   city: string;
 }
 
-const CreateSightingModal: React.FC<ModalProps> = ({
-  open,
-  // handleOpen,
-  handleClose,
-  // sightings,
-  // newSightingCallback,
-  // loadingCallback,
-}) => {
+const CreateSightingModal: React.FC<ModalProps> = ({ open, handleClose }) => {
   const [picture, setPicture] = useState<string | Blob>("");
   const [profilePictureError, setProfilePictureError] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");

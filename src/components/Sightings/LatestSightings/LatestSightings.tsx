@@ -16,13 +16,6 @@ const LatestSightings: React.FC = () => {
   const { data, isSuccess, isLoading, isError } =
     useGetSightingsQuery("/sightings");
 
-  // const newSightingCallback = useCallback(
-  // (createdNewSighting: sightingsList) => setSightings(createdNewSighting),
-  // []
-  // );
-
-  // const loadingCallback = useCallback((bool: boolean) => setLoading(bool), []);
-
   return (
     <>
       <div className="sighting__container">
@@ -46,6 +39,7 @@ const LatestSightings: React.FC = () => {
         </div>
       </div>
       {isLoading && <p className="text-center m-2">Loading...</p>}
+      {isError && <p className="text-center m-2">Something went wrong...</p>}
       {isSuccess && (
         <div className="m-4 grid__sighting__container mt-4">
           {data.sightings.map((sighting: Sightings) => (
@@ -67,9 +61,6 @@ const LatestSightings: React.FC = () => {
         open={openCreateSightingModal}
         handleOpen={handleOpenCreateSightingModal}
         handleClose={handleCloseCreateSightingModal}
-        // sightings={sightings}
-        // newSightingCallback={newSightingCallback}
-        // loadingCallback={loadingCallback}
       />
     </>
   );
