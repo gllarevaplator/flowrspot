@@ -56,14 +56,12 @@ const Home: React.FC = () => {
               />
             ))}
           </div>
-          {isSuccess && (
-            <PaginationForm
-              defaultPage={1}
-              count={data.meta.pagination.total_pages}
-              page={page}
-              onChange={handlePageChange}
-            />
-          )}
+          <PaginationForm
+            defaultPage={1}
+            count={data.meta.pagination.total_pages}
+            page={page}
+            onChange={handlePageChange}
+          />
         </>
       )}
     </>
