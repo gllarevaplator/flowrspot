@@ -19,7 +19,7 @@ export const flowersApi = createApi({
   tagTypes: ["Flowers"],
   baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: (builder) => ({
-    getFlowers: builder.query<FlowersApiResponse, number>({
+    getFlowers: builder.query<FlowersApiResponse, any>({
       query: (pageNumber: number) => `/flowers?page=${pageNumber}`,
       providesTags: [{ type: "Flowers", id: "LIST" }],
     }),

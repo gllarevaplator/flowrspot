@@ -10,7 +10,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    bottom: 4rem;
+    bottom: 3.5rem;
     font-size: 15px;
 }
 .card__description h4 {
@@ -30,7 +30,7 @@
     background-repeat: no-repeat;
     background-position: center;
     width: 100%;
-    height: 30rem;
+    height: 25rem;
     object-fit: cover;
     overflow: hidden;
 }
@@ -44,7 +44,7 @@
 }
 .card__button {
     position: absolute;
-    top: 26rem;
+    top: 21.5rem;
     width: 100%;
 }
 .card__button > span {

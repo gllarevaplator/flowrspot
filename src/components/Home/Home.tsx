@@ -1,20 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DiscoverFlowers from "../Flowers/DiscoverFlowers/DiscoverFlowers";
 import FlowerCard from "../Flowers/FlowerCard/FlowerCard";
 import Flower from "../../models/flowers";
-import { useGetFlowersQuery } from "../../features/services/flowersApi";
+import {
+  useGetFlowersQuery,
+  useGetSearchedFlowersQuery,
+} from "../../features/services/flowersApi";
 import { useAppSelector } from "../../features/app/store";
 import PaginationForm from "../Pagination/Pagination";
 import "./home.css";
 
 const Home: React.FC = () => {
   const user = useAppSelector((state) => state.user);
-  const [search, setSearch] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const { data, isLoading, isSuccess, isError } = useGetFlowersQuery(page);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
+    setSearchQuery(event.target.value);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLButtonElement>) => {
@@ -31,7 +34,7 @@ const Home: React.FC = () => {
   return (
     <>
       <DiscoverFlowers
-        search={search}
+        search={searchQuery}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
       />
@@ -42,26 +45,28 @@ const Home: React.FC = () => {
       {isError && <p className="text-center m-2">Something went wrong...</p>}
       {isSuccess && (
         <>
-          <div className="m-4 grid-container mt-4">
-            {data.flowers.map((flower: Flower) => (
-              <FlowerCard
-                id={flower.id}
-                key={flower.id}
-                latin_name={flower.latin_name}
-                name={flower.name}
-                sightings={flower.sightings}
-                profile_picture={flower.profile_picture}
-                favorite={flower.favorite}
-                user={user}
-              />
-            ))}
+          <div className="container">
+            <div className="m-4 grid-container mt-4">
+              {data?.flowers.map((flower: Flower) => (
+                <FlowerCard
+                  id={flower.id}
+                  key={flower.id}
+                  latin_name={flower.latin_name}
+                  name={flower.name}
+                  sightings={flower.sightings}
+                  profile_picture={flower.profile_picture}
+                  favorite={flower.favorite}
+                  user={user}
+                />
+              ))}
+            </div>
+            <PaginationForm
+              defaultPage={1}
+              count={data?.meta.pagination.total_pages}
+              page={page}
+              onChange={handlePageChange}
+            />
           </div>
-          <PaginationForm
-            defaultPage={1}
-            count={data.meta.pagination.total_pages}
-            page={page}
-            onChange={handlePageChange}
-          />
         </>
       )}
     </>

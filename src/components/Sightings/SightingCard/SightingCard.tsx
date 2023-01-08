@@ -46,7 +46,9 @@ const SightingCard: React.FC<Sightings> = ({
           </div>
         </div>
         <div>
-          <p className="sighting__card__description">{description}</p>
+          <div className="description__container">
+            <p className="sighting__card__description">{description}</p>
+          </div>
           <div className="d-flex justify-content-around">
             <div>
               <img src={like} alt="" />

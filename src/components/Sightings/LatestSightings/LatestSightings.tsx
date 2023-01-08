@@ -50,27 +50,29 @@ const LatestSightings: React.FC = () => {
       {isError && <p className="text-center m-2">Something went wrong...</p>}
       {isSuccess && (
         <>
-          <div className="m-4 grid__sighting__container mt-4">
-            {data.sightings.map((sighting: Sightings) => (
-              <SightingCard
-                key={sighting.id}
-                name={sighting.name}
-                picture={sighting.picture}
-                comments_count={sighting.comments_count}
-                likes_count={sighting.likes_count}
-                longitude={sighting.longitude}
-                latitude={sighting.latitude}
-                description={sighting.description}
-                flower={sighting.flower}
-              />
-            ))}
+          <div className="container">
+            <div className="m-4 grid__sighting__container mt-4">
+              {data.sightings.map((sighting: Sightings) => (
+                <SightingCard
+                  key={sighting.id}
+                  name={sighting.name}
+                  picture={sighting.picture}
+                  comments_count={sighting.comments_count}
+                  likes_count={sighting.likes_count}
+                  longitude={sighting.longitude}
+                  latitude={sighting.latitude}
+                  description={sighting.description}
+                  flower={sighting.flower}
+                />
+              ))}
+            </div>
+            <PaginationForm
+              defaultPage={1}
+              count={data?.meta.pagination.total_pages}
+              page={page}
+              onChange={handlePageChange}
+            />
           </div>
-          <PaginationForm
-            defaultPage={1}
-            count={data?.meta.pagination.total_pages}
-            page={page}
-            onChange={handlePageChange}
-          />
         </>
       )}
       <CreateSightingModal
