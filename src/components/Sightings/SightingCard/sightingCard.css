@@ -6,7 +6,7 @@
     position: relative;
 }
 .sightings__card__body {
-    box-shadow: 0px 3px 10px #ddd;
+    box-shadow: 0px 3px 5px rgb(215, 215, 215);
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
@@ -15,6 +15,7 @@
     word-break: break-all;
     color: #929292;
     font-weight: 400;
+    font-size: 15px;
 }
 .description__container {
     border-bottom: 1px solid #ddd;
@@ -50,7 +51,7 @@
 }
 .sighting__profile__image {
     height: 100%;
-    width: 100%;
+    width: 50px;
     border-radius: 50%;
     object-fit: cover;
     background-size: cover;
@@ -60,7 +61,7 @@
     padding-top: 5px;
 }
 .sighting__profile__info > h4 {
-    font-size: 20px;
+    font-size: 18px;
     margin: 0;
     color: #000000;
 }

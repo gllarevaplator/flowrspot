@@ -10,11 +10,15 @@
       padding: 50px;
       margin: 0 auto;
       position: relative;
-      max-width: 600px;
+      max-width: 700px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       height: 100%;
+}
+.discover__container input::placeholder {
+    font-weight: 300;
+    font-size: 15px;
 }
 .search__box {
     padding: 23px;
