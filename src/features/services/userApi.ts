@@ -15,7 +15,7 @@ interface UserRegisterProps {
   date_of_birth: string | Date;
 }
 
-interface AuthResponse {
+export interface AuthResponse {
   auth_token: string;
 }
 

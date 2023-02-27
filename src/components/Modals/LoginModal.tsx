@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { useAppDispatch } from "../../features/app/store";
-import { useSetUserLoginCredentialsMutation } from "../../features/services/userApi";
+import {
+  AuthResponse,
+  useSetUserLoginCredentialsMutation,
+} from "../../features/services/userApi";
 import { useLazyGetUserInfoQuery } from "../../features/services/userApi";
 import { useFormik } from "formik";
 import { modalStyle } from "./modalStyles/modalStyle";
@@ -55,7 +57,7 @@ const LoginModal: React.FC<ModalProps> = ({
         password: values.password,
       })
         .unwrap()
-        .then((data): void => {
+        .then((data: AuthResponse): void => {
           setErrorMessage("");
           const token = data.auth_token;
           const decodedToken: { user_id: number; exp: number } =
@@ -71,7 +73,7 @@ const LoginModal: React.FC<ModalProps> = ({
                 className: "primary__button text-center",
               },
             },
-          }).then((response): void => {
+          }).then((response: boolean): void => {
             if (response === true) {
               handleClose();
               handleOpenProfileModal?.();

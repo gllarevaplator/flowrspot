@@ -90,7 +90,7 @@ const CreateSightingModal: React.FC<ModalProps> = ({ open, handleClose }) => {
     },
   });
 
-  const handleImageUpload = (e: any) => {
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
     const selectedFiles = files as FileList;
     setPicture(selectedFiles?.[0]);
