@@ -3,8 +3,8 @@ import { Sightings } from "../../../models/sightings";
 import like from "../../../icons/like.svg";
 import comment from "../../../icons/comment.svg";
 import location from "../../../icons/location.svg";
-import "./sightingCard.css";
 import { useAppSelector } from "../../../features/app/store";
+import "./sightingCard.css";
 
 const SightingCard: React.FC<Sightings> = ({
   picture,

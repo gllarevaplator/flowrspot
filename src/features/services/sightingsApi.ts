@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import baseUrl from "./baseUrl";
 import { Sightings } from "../../models/sightings";
-import { RootState } from "../app/store";
 
 interface SightingsApiResponse {
   sightings: Sightings[];
@@ -20,8 +19,8 @@ export const sightingsApi = createApi({
   tagTypes: ["Sightings"],
   baseQuery: fetchBaseQuery({
     baseUrl,
-    prepareHeaders: (headers, { getState }): Headers => {
-      const token = (getState() as RootState).user.token;
+    prepareHeaders: (headers): Headers => {
+      const token = localStorage.getItem("user-token");
       if (token) {
         headers.set("Authorization", token);
       }

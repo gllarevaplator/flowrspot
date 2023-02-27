@@ -50,11 +50,6 @@ const NavBar: React.FC = () => {
                 Latest Sightings
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/favorite">
-                Favorites
-              </Link>
-            </li>
             {first_name && (
               <>
                 <li className="nav-item">

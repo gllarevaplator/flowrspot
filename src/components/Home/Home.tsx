@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import DiscoverFlowers from "../Flowers/DiscoverFlowers/DiscoverFlowers";
 import FlowerCard from "../Flowers/FlowerCard/FlowerCard";
 import Flower from "../../models/flowers";
-import {
-  useGetFlowersQuery,
-  useGetSearchedFlowersQuery,
-} from "../../features/services/flowersApi";
+import { useGetFlowersQuery } from "../../features/services/flowersApi";
 import { useAppSelector } from "../../features/app/store";
 import PaginationForm from "../Pagination/Pagination";
 import "./home.css";
@@ -14,7 +11,16 @@ const Home: React.FC = () => {
   const user = useAppSelector((state) => state.user);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [page, setPage] = useState<number>(1);
-  const { data, isLoading, isSuccess, isError } = useGetFlowersQuery(page);
+  const { data, isLoading, isSuccess, isError } = useGetFlowersQuery({
+    searchQuery,
+    page,
+  });
+
+  useEffect(() => {
+    if (searchQuery.length > 0) {
+      setPage(1);
+    }
+  }, [searchQuery]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
