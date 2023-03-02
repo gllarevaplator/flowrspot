@@ -17,7 +17,7 @@ const FlowerCard: React.FC<Flower> = ({
 
   return (
     <div className="card" data-testid="flower">
-      {user.id && (
+      {user.token && (
         <>
           <div className="favorite__flower">
             <img src={favoriteFlower} onClick={handleFavorite} />
