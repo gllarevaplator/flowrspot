@@ -1,3 +1,4 @@
+import React from "react";
 import { UserState } from "../features/user/userSlice";
 
 export default interface Flower {
@@ -8,4 +9,5 @@ export default interface Flower {
   profile_picture: string;
   favorite: boolean;
   user: UserState;
+  handleFavorite?: React.MouseEventHandler;
 }

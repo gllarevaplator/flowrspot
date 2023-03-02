@@ -11,6 +11,7 @@ const FlowerCard: React.FC<Flower> = ({
   profile_picture,
   favorite,
   user,
+  handleFavorite,
 }) => {
   const favoriteFlower: string = favorite ? favoriteIcon : nonFavoriteIcon;
 
@@ -19,7 +20,7 @@ const FlowerCard: React.FC<Flower> = ({
       {user.id && (
         <>
           <div className="favorite__flower">
-            <img src={favoriteFlower} />
+            <img src={favoriteFlower} onClick={handleFavorite} />
           </div>
         </>
       )}

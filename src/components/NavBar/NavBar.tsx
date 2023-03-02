@@ -19,7 +19,7 @@ const NavBar: React.FC = () => {
   const handleOpenProfileModal = () => setOpenProfileModal(true);
   const handleCloseProfileModal = () => setOpenProfileModal(false);
   const user = useAppSelector((state) => state.user);
-  const { first_name } = user;
+  const { first_name, token } = user;
 
   return (
     <div className="header">
@@ -50,6 +50,13 @@ const NavBar: React.FC = () => {
                 Latest Sightings
               </Link>
             </li>
+            {token && (
+              <li className="nav-item">
+                <Link className="nav-link" to="/favorites">
+                  Favorites
+                </Link>
+              </li>
+            )}
             {first_name && (
               <>
                 <li className="nav-item">

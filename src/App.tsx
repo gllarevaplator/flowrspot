@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import NavBar from "./components/NavBar/NavBar";
 import Home from "./components/Home/Home";
 import LatestSightings from "./components/Sightings/LatestSightings/LatestSightings";
+import Favorites from "./components/Favorites/Favorites";
 import Footer from "./components/Footer/Footer";
 import { Routes, Route } from "react-router-dom";
 import { useLazyGetUserInfoQuery } from "./features/services/userApi";
@@ -27,6 +28,7 @@ const App: React.FC = () => {
           <Route path="/" element={<Home />} />
           <Route path="/flowers" element={<Home />} />
           <Route path="/latest-sightings" element={<LatestSightings />} />
+          <Route path="/favorites" element={<Favorites />} />
         </>
       </Routes>
       <Footer />

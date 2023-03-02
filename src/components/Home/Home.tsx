@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import DiscoverFlowers from "../Flowers/DiscoverFlowers/DiscoverFlowers";
 import FlowerCard from "../Flowers/FlowerCard/FlowerCard";
 import Flower from "../../models/flowers";
-import { useGetFlowersQuery } from "../../features/services/flowersApi";
 import { useAppSelector } from "../../features/app/store";
+import { useGetFlowersQuery } from "../../features/services/flowersApi";
+import { useMarkFavoriteFlowerMutation } from "../../features/services/favoritesApi";
 import PaginationForm from "../Pagination/Pagination";
+import swal from "sweetalert";
+import { useNavigate } from "react-router-dom";
 import "./home.css";
 
 const Home: React.FC = () => {
@@ -15,6 +18,11 @@ const Home: React.FC = () => {
     searchQuery,
     page,
   });
+  const [
+    markFavoriteFlower,
+    { isSuccess: markedSuccess, isError: markedError },
+  ] = useMarkFavoriteFlowerMutation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (searchQuery.length > 0) {
@@ -22,11 +30,41 @@ const Home: React.FC = () => {
     }
   }, [searchQuery]);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    if (markedSuccess) {
+      swal({
+        title: "Flower added successfully on your favorites page :)",
+        icon: "success",
+        buttons: {
+          deny: { text: "OK", className: "primary__button text-center" },
+          confirm: {
+            text: "GO TO FAVORITES PAGE",
+            className: "primary__button text-center",
+          },
+        },
+      }).then((response: boolean): void => {
+        if (response === true) {
+          navigate("/favorites");
+        }
+      });
+    }
+    if (markedError) {
+      swal({
+        title:
+          "You already marked this flower as favorite, please try another one!",
+        icon: "error",
+        buttons: {
+          deny: { text: "OK", className: "primary__button text-center" },
+        },
+      });
+    }
+  }, [markedSuccess, markedError]);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setSearchQuery(event.target.value);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLButtonElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLButtonElement>): void => {
     event.preventDefault();
   };
 
@@ -35,6 +73,12 @@ const Home: React.FC = () => {
     value: number
   ): void => {
     setPage(value);
+  };
+
+  const handleFavorite = (flower_id: number, singleFlower: Flower) => {
+    const flower = { ...singleFlower };
+    flower.favorite = !flower.favorite;
+    markFavoriteFlower({ flower_id, flower });
   };
 
   return (
@@ -63,6 +107,7 @@ const Home: React.FC = () => {
                   profile_picture={flower.profile_picture}
                   favorite={flower.favorite}
                   user={user}
+                  handleFavorite={() => handleFavorite(flower.id, flower)}
                 />
               ))}
             </div>
