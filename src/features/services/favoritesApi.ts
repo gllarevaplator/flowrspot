@@ -2,6 +2,8 @@ import baseUrl from "./baseUrl";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 
 export interface Favorite {
+  id: number;
+  user_id: number;
   flower: {
     id: number;
     name: string;
@@ -67,8 +69,23 @@ export const favoritesApi = createApi({
         { type: "Favorites", flower_id },
       ],
     }),
+    deleteFavoriteFlower: builder.mutation<
+      Favorite,
+      { flower_id: number; id: number }
+    >({
+      query({ flower_id, id }: { flower_id: number; id: number }) {
+        return {
+          url: `/flowers/${flower_id}/favorites/${id}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: [{ type: "Favorites", id: "LIST" }],
+    }),
   }),
 });
 
-export const { useLazyGetFavoritesQuery, useMarkFavoriteFlowerMutation } =
-  favoritesApi;
+export const {
+  useLazyGetFavoritesQuery,
+  useMarkFavoriteFlowerMutation,
+  useDeleteFavoriteFlowerMutation,
+} = favoritesApi;

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   Favorite,
   useLazyGetFavoritesQuery,
+  useDeleteFavoriteFlowerMutation,
 } from "../../features/services/favoritesApi";
 import { useAppSelector } from "../../features/app/store";
 import FlowerCard from "../Flowers/FlowerCard/FlowerCard";
@@ -13,6 +14,7 @@ const Favorites: React.FC = () => {
   const token = localStorage.getItem("user-token");
   const [getFavorites, { data, isSuccess, isError, isLoading }] =
     useLazyGetFavoritesQuery();
+  const [deleteFavoriteFlower] = useDeleteFavoriteFlowerMutation();
   const [page, setPage] = useState<number>(1);
   const navigate = useNavigate();
 
@@ -22,7 +24,6 @@ const Favorites: React.FC = () => {
     } else {
       navigate("/");
     }
-    return () => {};
   }, [token, page]);
 
   const handlePageChange = (
@@ -32,9 +33,16 @@ const Favorites: React.FC = () => {
     setPage(value);
   };
 
+  const handleFavorite = (flower_id: number, id: number) => {
+    deleteFavoriteFlower({ flower_id, id });
+    if (page > 1 && data?.fav_flowers.length === 1) {
+      setPage(() => page - 1);
+    }
+  };
+
   return (
     <div>
-      {data?.fav_flowers.length === 0 && (
+      {data?.fav_flowers.length === 0 && page === 1 && (
         <Link to="/flowers">
           <p className="text-center m-4">
             Go to Flowers page to add favorite flowers
@@ -47,16 +55,19 @@ const Favorites: React.FC = () => {
         <>
           <div className="container">
             <div className="m-4 grid-container mt-4">
-              {data?.fav_flowers.map(({ flower }: Favorite) => (
+              {data?.fav_flowers.map((flower: Favorite) => (
                 <FlowerCard
                   id={flower.id}
                   key={flower.id}
-                  latin_name={flower.latin_name}
-                  name={flower.name}
-                  sightings={flower.sightings}
-                  profile_picture={flower.profile_picture}
-                  favorite={flower.favorite}
+                  latin_name={flower.flower.latin_name}
+                  name={flower.flower.name}
+                  sightings={flower.flower.sightings}
+                  profile_picture={flower.flower.profile_picture}
+                  favorite={flower.flower.favorite}
                   user={user}
+                  handleFavorite={() =>
+                    handleFavorite(flower.flower.id, flower.id)
+                  }
                 />
               ))}
             </div>
