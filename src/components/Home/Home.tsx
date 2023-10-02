@@ -91,7 +91,7 @@ const Home: React.FC = () => {
       {data?.flowers.length === 0 && (
         <p className="text-center m-4">No Flower Found...</p>
       )}
-      {isLoading && <p className="text-center m-4">Loading...</p>}
+      {isLoading && <p className="text-center m-4">Loading Flowers...</p>}
       {isError && <p className="text-center m-2">Something went wrong...</p>}
       {isSuccess && (
         <>
