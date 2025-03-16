@@ -88,7 +88,7 @@ const SignUpModal: React.FC<ModalProps> = ({
             .then(handleOpenLoginModal);
         })
         .catch(({ data: signUpError }: { data: { error: string } }): void =>
-          setErrorMessage(signUpError.error)
+          setErrorMessage(signUpError.error),
         );
     },
   });

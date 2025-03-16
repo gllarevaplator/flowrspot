@@ -1,19 +1,26 @@
 body {
   margin: 0;
 }
-html,body {
-  background-color:#FFFFFF;
+html,
+body {
+  background-color: #ffffff;
   font-family: "Poppins" !important;
   letter-spacing: -0.5px;
 }
-h1, h2, h3, h4, h5, h6, p {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
   margin-top: 0;
   font-family: inherit !important;
 }
-h1{
+h1 {
   font-weight: 800;
 }
-p {  
+p {
   font-weight: 200;
 }
 a {
@@ -26,5 +33,10 @@ button {
   border: 0;
   font-family: inherit !important;
 }
-input, :-ms-input-placeholder, ::placeholder, textarea, select { font-family:inherit !important; }
-
+input,
+:-ms-input-placeholder,
+::placeholder,
+textarea,
+select {
+  font-family: inherit !important;
+}

@@ -20,7 +20,7 @@ const store = configureStore({
       userApi.middleware,
       flowersApi.middleware,
       sightingsApi.middleware,
-      favoritesApi.middleware
+      favoritesApi.middleware,
     ),
 });
 

@@ -29,7 +29,7 @@ test("render FlowerCard component", () => {
       profile_picture={profile_picture}
       favorite={favorite}
       user={user}
-    />
+    />,
   );
   const flowerElement = screen.getByTestId("flower");
   expect(flowerElement).toBeInTheDocument();

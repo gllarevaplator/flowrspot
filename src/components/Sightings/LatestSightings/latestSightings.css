@@ -1,88 +1,88 @@
 .grid__sighting__container {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-gap: 15px;  
+  grid-gap: 15px;
 }
 @media only screen and (max-width: 1024px) {
   .grid__sighting__container {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 15px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
   }
 }
 @media only screen and (max-width: 770px) {
   .grid__sighting__container {
-      display: grid;
-      grid-template-columns: repeat(1, minmax(0, 1fr));
-      gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 20px;
   }
 }
 
 .sighting__container {
-    background: url('sightings-list.png') no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    height: 35rem;
-    overflow: hidden;
+  background: url("sightings-list.png") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 35rem;
+  overflow: hidden;
+}
+
+.sighting__description {
+  height: 100%;
+  padding: 50px;
+}
+
+.sightings__white__text {
+  color: #fff;
+}
+
+.header__sightings {
+  font-size: 35px;
+  font-weight: 500;
+  text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.139);
+}
+
+.description__sightings {
+  font-size: 20px;
+  font-weight: 300;
+  text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.139);
+}
+
+.add__sightings__container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.add__sightings__button {
+  align-self: flex-end;
+  border-radius: 5px;
+  font-weight: 500;
+  text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.139);
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.139);
+  margin-bottom: 20px;
+}
+
+@media only screen and (max-width: 770px) {
+  .add__sightings__container {
+    flex-wrap: wrap;
+    justify-content: flex-start;
   }
-  
-  .sighting__description {
-    height: 100%;
-    padding: 50px;
+
+  .add__sightings__button {
+    align-self: flex-start;
+    font-size: 16px;
   }
-  
-  .sightings__white__text {
-    color: #fff;
-  }
-  
+
   .header__sightings {
-    font-size: 35px;
-    font-weight: 500;
-    text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.139);
-  }
-  
-  .description__sightings {
-    font-size: 20px;
+    font-size: 30px;
     font-weight: 300;
     text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.139);
   }
-  
-  .add__sightings__container {
-    display: flex;
-    justify-content: flex-end;
-  }
-  
-  .add__sightings__button {
-    align-self: flex-end;
-    border-radius: 5px;
-    font-weight: 500;
+
+  .description__sightings {
+    font-size: 17px;
+    font-weight: 200;
     text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.139);
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.139);
-    margin-bottom: 20px;
   }
-  
-  @media only screen and (max-width: 770px) {
-    .add__sightings__container {
-      flex-wrap: wrap;
-      justify-content: flex-start;
-    }
-  
-    .add__sightings__button {
-      align-self: flex-start;
-      font-size: 16px;
-    }
-  
-    .header__sightings {
-      font-size: 30px;
-      font-weight: 300;
-      text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.139);
-    }
-  
-    .description__sightings {
-      font-size: 17px;
-      font-weight: 200;
-      text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.139);
-    }
-  }
+}

@@ -8,7 +8,7 @@ export default interface ModalProps {
   handleCloseLoginModal?: () => void;
   handleOpenSignUpModal?: () => void;
   handleCloseSignUpModal?: () => void;
-  handleOpenProfileModal?: () => (void | (() => void | undefined));
+  handleOpenProfileModal?: () => void | (() => void | undefined);
   handleCloseProfileModal?: () => void;
   sightings?: Sightings[];
 }

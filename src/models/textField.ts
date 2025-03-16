@@ -10,7 +10,7 @@ export default interface TextFieldProps {
   touched?: boolean;
   onChange?: ((e: React.ChangeEvent<HTMLInputElement>) => void) | undefined;
   onBlur?: (
-    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => void;
   errors?: string;
 }

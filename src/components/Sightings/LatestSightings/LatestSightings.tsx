@@ -19,7 +19,7 @@ const LatestSightings: React.FC = () => {
 
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
-    value: number
+    value: number,
   ): void => {
     setPage(value);
   };

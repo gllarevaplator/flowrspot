@@ -85,7 +85,7 @@ const CreateSightingModal: React.FC<ModalProps> = ({ open, handleClose }) => {
             data: { error: string };
           }): void => {
             if (createSightingError) setErrorMessage(createSightingError.error);
-          }
+          },
         );
     },
   });

@@ -1,32 +1,32 @@
 .submit__button {
-    width: 100%;
+  width: 100%;
 }
 .modal__header {
-    display: flex;
+  display: flex;
 }
 #modal-modal-title {
-    flex-grow: 1;
+  flex-grow: 1;
 }
 .swal-footer {
-    text-align: center;
+  text-align: center;
 }
 .button__wrapper {
-    margin-top: 100px;
+  margin-top: 100px;
 }
 .logout__button {
-    padding: 10px 24px;
-    border-radius: 5px;
+  padding: 10px 24px;
+  border-radius: 5px;
 }
 .avatar__description {
-    margin-left: 20px;
+  margin-left: 20px;
 }
 .avatar__description h4 {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 .paragraph__info {
-    margin: 0;
-    font-size: 13px;
+  margin: 0;
+  font-size: 13px;
 }
 .user__firstname {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }

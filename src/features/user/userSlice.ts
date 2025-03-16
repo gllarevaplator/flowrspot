@@ -39,7 +39,7 @@ export const userSlice = createSlice({
       (state, action: PayloadAction<{ auth_token: string }>) => {
         state.token = action.payload.auth_token;
         localStorage.setItem("user-token", action.payload.auth_token);
-      }
+      },
     );
     builder.addMatcher(
       userApi.endpoints.getUserInfo.matchFulfilled,
@@ -48,7 +48,7 @@ export const userSlice = createSlice({
         state.first_name = action.payload.user.first_name;
         state.last_name = action.payload.user.last_name;
         state.token = localStorage.getItem("user-token");
-      }
+      },
     );
   },
 });
