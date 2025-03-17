@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-montserrat: "Montserrat", sans-serif;
+    --font-ubuntu: "Ubuntu", sans-serif;
+    --font-playfair: "Playfair", serif;
+
+    /* Font sizes */
+    --font-size-heading-1: 2.5rem;
+    --font-size-text-body-small: 1.063rem;
+
+    /* Font weights */
+    --font-weight-heading: 600;
+    --font-weight-body: 400;
+
+    /* Line heights */
+    --line-height-heading-1: 2.5rem;
+    --line-height-text-body-small: 1.5rem;
+  }
+
+  body {
+    letter-spacing: 0;
+    font-family: var(--font-ubuntu);
+  }
+}
+
+@layer components {
+  .heading-1 {
+    font-family: var(--font-montserrat);
+    font-size: var(--font-size-heading-1);
+    font-weight: var(--font-weight-heading);
+    line-height: var(--line-height-heading-1);
+  }
+
+  .text-body-small {
+    font-family: var(--font-playfair);
+    font-size: var(--font-size-text-body-small);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-text-body-small);
+  }
+}
